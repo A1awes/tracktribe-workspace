@@ -1,0 +1,2118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TrackTribe — питч-дек для инвесторов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #131317;
+  --bg-elevated: #1A1A20;
+  --paper: #16161B;
+  --paper2: #1E1D24;
+  --sur: rgba(29, 28, 35, 0.88);
+  --sur-hover: rgba(37, 35, 44, 0.96);
+  --rose: #D88498;
+  --rose-ink: #ECA0B2;
+  --rose-soft: rgba(216, 132, 152, 0.14);
+  --rose-border: rgba(216, 132, 152, 0.36);
+  --peach: #E5AC97;
+  --ink: #F5F2F4;
+  --ink-soft: #DCD6DA;
+  --mut: #A9A1A6;
+  --line: #2E2C35;
+  --coal: #131317;
+  --coal2: #1D1C23;
+  --coal3: #26242E;
+  --coal-line: #322F3B;
+  --ok: #5CE0A0;
+  --ok-bg: rgba(46, 158, 107, 0.16);
+  --warn: #F2C16B;
+  --warn-bg: rgba(199, 127, 26, 0.16);
+  --bad: #F47986;
+  --bad-bg: rgba(200, 64, 79, 0.16);
+  --grad: linear-gradient(125deg, #D88498 0%, #E5AC97 100%);
+  --grad-soft: linear-gradient(135deg, rgba(216,132,152,0.16) 0%, rgba(229,172,151,0.12) 100%);
+  --shadow-sm: 0 6px 22px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 14px 36px rgba(0, 0, 0, 0.42);
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  height: 100%;
+  background: #0B0B0E;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#stage {
+  position: fixed;
+  inset: 0 0 48px 0;
+  display: grid;
+  place-items: center;
+}
+
+#scaler {
+  width: 1280px;
+  height: 720px;
+  position: relative;
+  transform-origin: center center;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.78), 0 0 0 1px rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 1280px;
+  height: 720px;
+  background: radial-gradient(circle at 88% 12%, rgba(216, 132, 152, 0.11), transparent 45%),
+              radial-gradient(circle at 12% 88%, rgba(229, 172, 151, 0.08), transparent 48%),
+              var(--bg-deep);
+  color: var(--ink);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(0.992);
+  transition: opacity .45s var(--ease), transform .45s var(--ease), visibility 0s linear .45s;
+  padding: 34px 54px 24px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 14px;
+}
+
+.slide.on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity .45s var(--ease), transform .45s var(--ease);
+  z-index: 2;
+}
+
+@keyframes slideItemFade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.slide.on .s-head { animation: slideItemFade .35s var(--ease) .04s both; }
+.slide.on .card,
+.slide.on .table-wrap { animation: slideItemFade .42s var(--ease) .10s both; }
+.slide.on .cards > .card:nth-child(1) { animation-delay: .08s; }
+.slide.on .cards > .card:nth-child(2) { animation-delay: .14s; }
+.slide.on .cards > .card:nth-child(3) { animation-delay: .20s; }
+.slide.on .foot { animation: slideItemFade .38s var(--ease) .22s both; }
+
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .042;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@keyframes floatGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(18px, -14px) scale(1.06); }
+}
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  opacity: .35;
+  z-index: 0;
+  animation: floatGlow 9s ease-in-out infinite;
+}
+
+.slide > *:not(.grain):not(.glow) {
+  position: relative;
+  z-index: 1;
+}
+
+.s-head {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 11px;
+}
+
+.s-head-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.kick {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--rose-ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.kick::before {
+  content: "";
+  display: inline-block;
+  width: 22px;
+  height: 2px;
+  background: var(--grad);
+  border-radius: 2px;
+}
+
+h1, h2, h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+h2 {
+  font-size: 33px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.sub {
+  color: var(--mut);
+  font-size: 14.8px;
+  line-height: 1.44;
+  max-width: 1060px;
+}
+
+.body {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border-top: 1px solid var(--line);
+  padding-top: 9px;
+}
+
+.src {
+  font-size: 11.4px;
+  color: var(--mut);
+  line-height: 1.4;
+  max-width: 1050px;
+}
+.src b { color: var(--ink-soft); font-weight: 600; }
+
+.pageno {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--rose-ink);
+  white-space: nowrap;
+  background: var(--paper2);
+  padding: 4px 11px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 99px;
+  border: 1px solid;
+  vertical-align: middle;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+.b-code { color: #F5B8C6; border-color: rgba(216,132,152,0.5); background: rgba(216,132,152,0.16); }
+.b-assume { color: #F7CA79; border-color: rgba(242,193,107,0.45); background: rgba(199,127,26,0.18); }
+.b-verified { color: #74E8B0; border-color: rgba(92,224,160,0.45); background: rgba(46,158,107,0.18); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.8px;
+  font-weight: 600;
+  padding: 4px 11px;
+  border-radius: 99px;
+  background: var(--rose-soft);
+  color: var(--rose-ink);
+  border: 1px solid var(--rose-border);
+  white-space: nowrap;
+}
+
+.cards { display: grid; gap: 14px; }
+.card {
+  background: var(--sur);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  padding: 15px 18px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+}
+.card:hover {
+  background: var(--sur-hover);
+  border-color: rgba(216, 132, 152, 0.55);
+  box-shadow: var(--shadow-md), 0 0 0 1px rgba(216, 132, 152, 0.22);
+}
+.card.hl-card {
+  background: linear-gradient(165deg, rgba(216, 132, 152, 0.16) 0%, rgba(29, 28, 35, 0.94) 100%);
+  border-color: var(--rose);
+  box-shadow: 0 8px 28px rgba(216, 132, 152, 0.14);
+}
+.card.hl-card:hover {
+  border-color: #ECA0B2;
+  box-shadow: 0 10px 32px rgba(216, 132, 152, 0.24), 0 0 0 1px rgba(236, 160, 178, 0.35);
+}
+.card.accent-left {
+  border-left: 4px solid var(--rose);
+}
+
+.arch-node {
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  background: var(--paper2);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+}
+.arch-node:hover {
+  border-color: var(--rose);
+  background: rgba(38, 36, 46, 0.95);
+  box-shadow: 0 0 0 1px rgba(216, 132, 152, 0.35), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.arch-hub {
+  border: 2px solid var(--rose);
+  border-radius: 14px;
+  padding: 12px 18px;
+  background: var(--rose-soft);
+  text-align: center;
+  max-width: 440px;
+  margin: 0 auto;
+  width: 100%;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+}
+.arch-hub:hover {
+  border-color: #F2B5C4;
+  background: rgba(216, 132, 152, 0.22);
+  box-shadow: 0 0 0 1px rgba(242, 181, 196, 0.4), 0 10px 28px rgba(216, 132, 152, 0.2);
+}
+
+.card h3 {
+  font-size: 17.5px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: var(--ink);
+}
+
+.card p {
+  font-size: 13.6px;
+  color: var(--mut);
+  line-height: 1.48;
+}
+
+.big {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--rose-ink);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+@keyframes metricGlow {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.slide.on .big {
+  animation: metricGlow .45s var(--ease) .14s both;
+}
+
+.lbl {
+  font-size: 12.4px;
+  color: var(--mut);
+  line-height: 1.42;
+  margin-top: 4px;
+}
+
+ul.clean-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13.6px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+ul.clean-list li {
+  position: relative;
+  padding-left: 17px;
+}
+ul.clean-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rose);
+  box-shadow: 0 0 8px var(--rose);
+}
+
+.table-wrap {
+  background: var(--sur);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.4px;
+}
+th {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--mut);
+  text-align: left;
+  padding: 8.5px 12px;
+  border-bottom: 1.5px solid var(--line);
+  background: #1B1A22;
+  font-weight: 700;
+}
+td {
+  padding: 7.5px 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+  line-height: 1.36;
+  color: var(--ink-soft);
+}
+tr:last-child td { border-bottom: none; }
+tbody tr {
+  transition: background 0.18s ease;
+}
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.num { font-family: "JetBrains Mono", monospace; font-weight: 500; }
+.hl { background: rgba(216, 132, 152, 0.15); }
+.yes { color: var(--ok); font-weight: 700; }
+.no { color: var(--bad); font-weight: 700; }
+.mid { color: var(--warn); font-weight: 700; }
+
+@keyframes eqPulse {
+  0%, 100% { transform: scaleY(0.3); opacity: 0.75; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+.eq-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3.5px;
+  height: 34px;
+}
+.eq-bars i {
+  flex: 1;
+  background: var(--grad);
+  border-radius: 2px;
+  height: 100%;
+  transform-origin: bottom;
+  animation: eqPulse 1.4s ease-in-out infinite;
+}
+.eq-bars i:nth-child(2n) { animation-duration: 1.1s; animation-delay: 0.18s; }
+.eq-bars i:nth-child(3n) { animation-duration: 1.7s; animation-delay: 0.35s; }
+.eq-bars i:nth-child(4n) { animation-duration: 1.25s; animation-delay: 0.08s; }
+
+@keyframes dataStream {
+  0% { background-position: 0 0; }
+  100% { background-position: 48px 0; }
+}
+.stream-line {
+  flex: 1;
+  height: 3px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(90deg, var(--rose) 0 10px, transparent 10px 18px);
+  background-size: 48px 100%;
+  animation: dataStream 1.2s linear infinite;
+}
+.stream-line-p2p {
+  flex: 1;
+  height: 3.5px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(90deg, var(--ok) 0 12px, rgba(92,224,160,0.15) 12px 22px);
+  background-size: 48px 100%;
+  animation: dataStream 0.9s linear infinite;
+}
+
+@keyframes liveDotPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 8px #4ADE80; }
+  50% { transform: scale(1.25); box-shadow: 0 0 16px #4ADE80; }
+}
+.live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #4ADE80;
+  display: inline-block;
+  animation: liveDotPulse 2s ease-in-out infinite;
+}
+
+#hud {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 24px;
+  background: rgba(15, 15, 19, 0.88);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: #CFC9CC;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+#cnt {
+  min-width: 52px;
+  text-align: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+#bar {
+  flex: 1;
+  height: 4px;
+  background: #2E2D36;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+}
+#bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--grad);
+  transition: width .4s var(--ease);
+}
+#hud button, #hud select {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #F4EFF1;
+  border-radius: 8px;
+  height: 30px;
+  padding: 0 12px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all .2s ease;
+}
+#hud button:hover, #hud select:hover {
+  border-color: var(--rose);
+  color: var(--rose);
+  background: rgba(216, 132, 152, 0.1);
+}
+#hud select {
+  max-width: 260px;
+  outline: none;
+  background-color: #1B1A21;
+}
+.hint {
+  opacity: .65;
+  font-size: 11.5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media print {
+  html, body { overflow: visible; background: #131317; height: auto; }
+  #stage { position: static; display: block; }
+  #scaler { width: auto; height: auto; transform: none !important; box-shadow: none; }
+  #hud { display: none; }
+  .slide {
+    position: relative;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    page-break-after: always;
+    margin: 0 auto;
+  }
+  @page { size: 1280px 720px; margin: 0; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<div id="stage"><div id="scaler">
+
+<!-- =========================================================
+     1 · ТИТУЛ
+     ========================================================= -->
+<section class="slide dark on" data-title="01 · Титул — TrackTribe">
+  <div class="glow" style="width:540px;height:540px;left:-140px;top:-160px;background:radial-gradient(circle,#C4798B,transparent 65%)"></div>
+  <div class="glow" style="width:480px;height:480px;right:-100px;bottom:-140px;background:radial-gradient(circle,#D9A08C,transparent 65%)"></div>
+  <div class="grain"></div>
+
+  <div class="s-head" style="border-color:rgba(255,255,255,0.09)">
+    <div class="s-head-top">
+      <div class="kick">Питч-дек · Стартап в ИТ · РТУ МИРЭА · ЭФБО-04-23</div>
+      <span class="badge b-code">Pre-seed · Прототип готов</span>
+    </div>
+  </div>
+
+  <div class="body" style="justify-content:center">
+    <div style="display:grid;grid-template-columns:1.18fr 0.82fr;gap:32px;align-items:center">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border-radius:99px;background:rgba(196,121,139,0.14);border:1px solid rgba(196,121,139,0.35);font-size:11.5px;color:#F0B6C4;margin-bottom:14px">
+          <span>♪</span> Веб-сервис синхронного аудио без регистрации
+        </div>
+        <h1 style="font-size:74px;font-weight:800;letter-spacing:-0.02em;margin-bottom:8px;color:#FFF">
+          Track<span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Tribe</span>
+        </h1>
+        <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:25px;color:#E9C9D2;margin-bottom:18px">
+          Хорошая музыка. Общий ритм.
+        </div>
+        <p class="sub" style="font-size:15px;line-height:1.55;color:#C9C2C6;margin-bottom:26px">
+          Веб-сервис совместного прослушивания музыки и личных записей. Комната по QR или коду, псевдоним вместо аккаунта, свои файлы — синхронно у всех участников.
+        </p>
+
+        <div class="cards" style="grid-template-columns:repeat(3,1fr);gap:12px">
+          <div class="card" style="background:rgba(34,34,39,0.85);padding:14px 16px">
+            <div class="big" style="font-size:26px">0 ₽</div>
+            <div class="lbl" style="margin-top:6px">вход и базовый тариф · без аккаунта</div>
+            <div style="margin-top:8px"><span class="badge b-code">из кода</span></div>
+          </div>
+          <div class="card" style="background:rgba(34,34,39,0.85);padding:14px 16px">
+            <div class="big" style="font-size:26px">10·20·2ч</div>
+            <div class="lbl" style="margin-top:6px">лимиты Free: участники · треки · сессия</div>
+            <div style="margin-top:8px"><span class="badge b-code">из кода</span></div>
+          </div>
+          <div class="card hl-card" style="padding:14px 16px">
+            <div class="big" style="font-size:26px">150 ₽</div>
+            <div class="lbl" style="margin-top:6px">Pro в месяц · автоплатёж</div>
+            <div style="margin-top:8px"><span class="badge b-code">из кода</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="background:linear-gradient(160deg,#252329 0%,#1B1A1F 100%);border-color:#3B353B;padding:22px;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.45)">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid #342F35">
+          <div style="display:flex;align-items:center;gap:9px">
+            <span class="live-dot"></span>
+            <span class="num" style="font-size:12.5px;color:#F0B6C4;font-weight:700">КОМНАТА · C15C3061</span>
+          </div>
+          <span class="badge b-assume">Sync: цель ±100 мс</span>
+        </div>
+
+        <div style="margin:16px 0;padding:14px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--grad);display:grid;place-items:center;color:#fff;font-size:18px;font-weight:700;box-shadow:0 6px 16px rgba(196,121,139,0.35)">▶</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:700;font-size:13.5px;color:#FFF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Запись разговора с папой · 1998</div>
+              <div class="num" style="font-size:11px;color:#A9A2A6;margin-top:3px">локальный файл · P2P WebRTC · 02:41 / 05:12</div>
+            </div>
+          </div>
+          <div class="eq-bars" style="height:36px;margin-bottom:6px">
+            <i style="height:45%"></i><i style="height:80%"></i><i style="height:60%"></i><i style="height:95%"></i>
+            <i style="height:70%"></i><i style="height:85%"></i><i style="height:50%"></i><i style="height:75%"></i>
+            <i style="height:65%"></i><i style="height:90%"></i><i style="height:55%"></i><i style="height:78%"></i>
+            <i style="height:40%"></i><i style="height:82%"></i><i style="height:62%"></i><i style="height:70%"></i>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div style="display:flex;gap:8px">
+            <span class="pill" style="background:rgba(196,121,139,0.2);color:#F3C1CD;border-color:rgba(196,121,139,0.4)">Саша · хост</span>
+            <span class="pill" style="background:rgba(255,255,255,0.06);color:#D5CFD2;border-color:#3E3A40">Мама · слушает</span>
+          </div>
+          <span class="num" style="font-size:11px;color:#9B9497">Племя · 2/10</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-top:12px;border-top:1px solid #342F35;text-align:center;font-size:11px;color:#B8B0B4">
+          <div style="background:#2A272D;padding:7px;border-radius:8px">▦ QR-вход</div>
+          <div style="background:#2A272D;padding:7px;border-radius:8px">⇄ P2P без сервера</div>
+          <div style="background:#2A272D;padding:7px;border-radius:8px">RU / EN · 3 темы</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Авторы: <b>Меджидов Заур</b> (тимлид) · <b>Амини Аким</b> (аналитик) · Преподаватель: <b>Адышкин С.С.</b> · ИПТИП РТУ МИРЭА</div>
+    <div class="pageno">01 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2 · ПРОБЛЕМА
+     ========================================================= -->
+<section class="slide" data-title="02 · Проблема">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">02 · Проблема</div>
+      <span class="badge b-verified">Рыночный контекст РФ</span>
+    </div>
+    <h2>Совместное прослушивание сломано для «своих»</h2>
+    <p class="sub">Музыка — массовая привычка, но слушать <i>вместе на расстоянии</i> и тем более <i>личные записи</i> сегодня почти негде.</p>
+  </div>
+
+  <div class="body">
+    <div class="cards" style="grid-template-columns:repeat(3,1fr)">
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span class="lbl" style="margin:0;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Масштаб рынка</span>
+            <span class="badge b-verified">проверено</span>
+          </div>
+          <div class="big">38 → 46 млрд ₽</div>
+        </div>
+        <p style="margin-top:8px">рынок музыкального стриминга РФ: 2024 (+51%) → 2025 (+23%). Музыка — массовый цифровой ритуал.</p>
+      </div>
+
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span class="lbl" style="margin:0;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Уход глобальных игроков</span>
+            <span class="badge b-verified">проверено</span>
+          </div>
+          <div class="big">11.04.2022</div>
+        </div>
+        <p style="margin-top:8px">Spotify приостановил работу в РФ; юрлицо ликвидировано в дек. 2023. Международные инструменты совместного прослушивания недоступны.</p>
+      </div>
+
+      <div class="card hl-card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span class="lbl" style="margin:0;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Пустая ниша в РФ</span>
+            <span class="badge b-assume">допущение</span>
+          </div>
+          <div class="big">0 сервисов</div>
+        </div>
+        <p style="margin-top:8px">хостед-сервисов в РФ, где можно без аккаунта слушать <b>свои</b> файлы и записи синхронно (по нашей таблице конкурентов, слайд 6).</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.35fr 0.65fr;gap:14px;flex:1">
+      <div class="card accent-left">
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <h3>Боли аудитории (гипотеза — валидируем на пилоте, не выдаём за опрос)</h3>
+            <span class="badge b-assume">гипотеза</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;margin-top:6px">
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span class="pill" style="padding:2px 8px;font-family:'JetBrains Mono',monospace">01</span>
+              <p style="color:var(--ink-soft)">Пары и друзья в разных городах не могут разделить «тот самый» трек в один момент.</p>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span class="pill" style="padding:2px 8px;font-family:'JetBrains Mono',monospace">02</span>
+              <p style="color:var(--ink-soft)">Семейные архивы (голосовые, записи близких, кассеты) негде слушать вместе.</p>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span class="pill" style="padding:2px 8px;font-family:'JetBrains Mono',monospace">03</span>
+              <p style="color:var(--ink-soft)">Стриминги требуют аккаунт и подписку; личные файлы не поддерживаются.</p>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span class="pill" style="padding:2px 8px;font-family:'JetBrains Mono',monospace">04</span>
+              <p style="color:var(--ink-soft)">Порог входа убивает спонтанность: «зарегистрируйся → установи → подпишись».</p>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:12px;color:var(--mut)">
+          Мы сознательно не придумываем фейковые опросы — проверяем спрос реальным поведением в продукте.
+        </div>
+      </div>
+
+      <div class="card" style="background:var(--paper2)">
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <h3>План валидации без опроса</h3>
+            <span class="badge b-code">в коде</span>
+          </div>
+          <p style="margin-bottom:10px">Метрики уже вшиты в продукт; замер — на публичном пилоте (пилот запланирован, данных пока нет):</p>
+          <ul class="clean-list">
+            <li><b>Retention комнат:</b> доля повторных комнат</li>
+            <li><b>Вовлечённость:</b> средняя длительность сессии</li>
+            <li><b>Виральность:</b> число QR-приглашений на хоста</li>
+            <li><b>Монетизация:</b> конверсия Free → Pro</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Источники: <b>Ведомости 13.08.2025</b> (рынок 2024: 38 млрд ₽, +51%, J'son & Partners) · <b>Коммерсантъ 19.05.2026</b> (2025: 46 млрд ₽, +23%) · <b>Фонтанка 07.04.2022 / ТАСС 17.12.2023</b> (уход Spotify).</div>
+    <div class="pageno">02 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     3 · РЕШЕНИЕ / MVP
+     ========================================================= -->
+<section class="slide" data-title="03 · Решение / MVP">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">03 · Решение / MVP</div>
+      <span class="badge b-code">Рабочий прототип</span>
+    </div>
+    <h2>Комната для своих — за секунды, без регистрации</h2>
+    <p class="sub">Прототип работает: комнаты, QR, синхронный плеер, «Племя», локальные файлы, RU/EN, три темы.</p>
+  </div>
+
+  <div class="body">
+    <div style="display:grid;grid-template-columns:1.08fr 0.92fr;gap:20px;flex:1;align-items:stretch">
+      <div class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between">
+        <div style="background:#1D1B22;color:#F2EFF0;padding:12px 18px;display:flex;align-items:center;gap:10px;font-size:13px;border-bottom:1px solid var(--line)">
+          <span class="live-dot"></span>
+          <span class="num" style="color:#ECA0B2;font-weight:700">Комната C15C3061</span>
+          <span class="num" style="margin-left:auto;font-size:11.5px;color:#B8B0B4;background:#282530;padding:3px 9px;border-radius:6px;border:1px solid var(--line)">Sync ±цель 100 мс</span>
+        </div>
+
+        <div style="padding:18px;flex:1;display:flex;flex-direction:column;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="pill">Саша · вы</span>
+            <span class="pill" style="background:var(--paper2);color:var(--ink-soft);border-color:var(--line)">Мама · слушает</span>
+            <span class="num" style="margin-left:auto;font-size:11.5px;color:var(--mut)">Племя · 2 участника</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:14px;background:var(--paper2);border:1px solid var(--line);border-radius:14px;padding:14px 16px">
+            <div style="width:46px;height:46px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff;font-size:17px;flex-shrink:0;box-shadow:0 4px 12px rgba(196,121,139,0.3)">▶</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:700;font-size:15px;color:var(--ink)">Запись разговора с папой · 1998</div>
+              <div class="num" style="font-size:12px;color:var(--mut);margin-top:3px">локальный файл · P2P · 02:41 / 05:12</div>
+            </div>
+            <span class="badge b-code">P2P Audio</span>
+          </div>
+
+          <div>
+            <div class="eq-bars" style="height:36px;margin-bottom:14px">
+              <i style="height:40%"></i><i style="height:75%"></i><i style="height:55%"></i><i style="height:90%"></i>
+              <i style="height:65%"></i><i style="height:80%"></i><i style="height:45%"></i><i style="height:70%"></i>
+              <i style="height:60%"></i><i style="height:85%"></i><i style="height:50%"></i><i style="height:72%"></i>
+              <i style="height:58%"></i><i style="height:84%"></i><i style="height:48%"></i><i style="height:66%"></i>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <span class="pill" style="background:var(--paper2);color:var(--ink-soft);border-color:var(--line)">⧉ скопировать код</span>
+              <span class="pill" style="background:var(--paper2);color:var(--ink-soft);border-color:var(--line)">▦ показать QR</span>
+              <span class="pill" style="background:var(--paper2);color:var(--ink-soft);border-color:var(--line)">🔗 пригласить</span>
+              <span class="pill" style="background:var(--rose-soft)">＋ свой файл</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:10px 18px;background:var(--paper2);border-top:1px solid var(--line);font-size:11.5px;color:var(--mut)">
+          Интерфейс прототипа (воспроизведён из кода продукта). Скриншоты живой комнаты — в репозитории.
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px">
+        <div class="card">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace">01 · Вход</span>
+              <span class="badge b-code">из кода</span>
+            </div>
+            <h3>Вход за секунды</h3>
+            <p style="margin-top:6px">Ник + код комнаты или QR. Никаких почт, паролей, OAuth-форм и установок приложений.</p>
+          </div>
+          <div class="num" style="font-size:11px;color:var(--rose-ink);margin-top:10px">→ 0 кликов до регистрации</div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace">02 · Плеер</span>
+              <span class="badge b-code">из кода</span>
+            </div>
+            <h3>Синхронный плеер</h3>
+            <p style="margin-top:6px">Один трек и один момент у всех участников. Живой индикатор Sync показывает точный рассинхрон.</p>
+          </div>
+          <div class="num" style="font-size:11px;color:var(--rose-ink);margin-top:10px">→ Цель синхронизации ±100 мс</div>
+        </div>
+
+        <div class="card hl-card">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace">03 · Контент</span>
+              <span class="badge b-code">из кода</span>
+            </div>
+            <h3>Свои файлы и записи</h3>
+            <p style="margin-top:6px">Музыка, голосовые, семейный архив. Передача P2P внутри комнаты — сервер не хранит аудио.</p>
+          </div>
+          <div class="num" style="font-size:11px;color:var(--rose-ink);margin-top:10px">→ 0 ГБ аудио на диске сервера</div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace">04 · Комьюнити</span>
+              <span class="badge b-code">из кода</span>
+            </div>
+            <h3>«Племя» и локализация</h3>
+            <p style="margin-top:6px">Участники и статусы в реальном времени. Полная поддержка RU/EN, светлая/тёмная/системная темы.</p>
+          </div>
+          <div class="num" style="font-size:11px;color:var(--rose-ink);margin-top:10px">→ Адаптивный веб-интерфейс</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Лимиты Free (10 участников / 20 треков / 2 часа) и баннер Pro 150 ₽/мес — из кода продукта. Целевой рассинхрон ±100 мс — будет измеряться индикатором Sync на пилоте.</div>
+    <div class="pageno">03 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     4 · АРХИТЕКТУРА
+     ========================================================= -->
+<section class="slide" data-title="04 · Архитектура">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">04 · Архитектура</div>
+      <span class="badge b-code">WebSocket + WebRTC P2P</span>
+    </div>
+    <h2>Сервер синхронизирует, аудио идёт напрямую</h2>
+    <p class="sub">Экономическое преимущество: сервер не хранит и не раздаёт аудио — только сигналинг и часы.</p>
+  </div>
+
+  <div class="body">
+    <div class="card" style="padding:20px 24px;background:linear-gradient(180deg,rgba(35,33,42,0.92) 0%,rgba(24,23,29,0.96) 100%)">
+      <div style="display:grid;grid-template-columns:250px 1fr 250px;gap:18px;align-items:center">
+        <div class="arch-node">
+          <div style="width:42px;height:42px;margin:0 auto 8px;border-radius:50%;background:var(--rose-soft);display:grid;place-items:center;font-size:20px">🎧</div>
+          <div style="font-weight:700;font-size:15.5px;color:var(--ink)">Участник A (Хост)</div>
+          <div class="num" style="font-size:11.5px;color:var(--mut);margin-top:4px">браузер · локальный файл<br>Web Audio API</div>
+          <div style="margin-top:8px"><span class="badge b-code">Источник файла</span></div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="stream-line"></div>
+            <span class="num" style="font-size:11px;color:var(--rose-ink);font-weight:600;background:var(--rose-soft);padding:4px 11px;border-radius:99px;border:1px solid var(--rose-border)">
+              ⇄ WebSocket · сигналинг + NTP-синхронизация часов
+            </span>
+            <div class="stream-line"></div>
+          </div>
+
+          <div class="arch-hub">
+            <div style="font-weight:800;font-size:15.5px;color:var(--ink)">VPS · Bun + Next.js + TypeScript</div>
+            <div style="font-size:12.5px;color:var(--ink-soft);margin-top:3px">
+              комнаты, ники, статусы, выравнивание часов · <b style="color:var(--rose-ink)">аудио не хранится (0 ГБ)</b>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;margin-top:2px">
+            <div class="stream-line-p2p"></div>
+            <span class="num" style="font-size:11.5px;color:var(--ok);background:rgba(92,224,160,0.12);border:1px solid rgba(92,224,160,0.38);padding:4px 12px;border-radius:99px;font-weight:600">
+              ⇄ P2P (WebRTC DataChannel) — аудио напрямую между участниками
+            </span>
+            <div class="stream-line-p2p"></div>
+          </div>
+        </div>
+
+        <div class="arch-node">
+          <div style="width:42px;height:42px;margin:0 auto 8px;border-radius:50%;background:var(--rose-soft);display:grid;place-items:center;font-size:20px">🎧</div>
+          <div style="font-weight:700;font-size:15.5px;color:var(--ink)">Участник B (Слушатель)</div>
+          <div class="num" style="font-size:11.5px;color:var(--mut);margin-top:4px">браузер · тот же момент<br>индикатор Sync</div>
+          <div style="margin-top:8px"><span class="badge b-assume">Sync: цель ±100 мс</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="grid-template-columns:repeat(3,1fr)">
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <h3>1. Синхронизация</h3>
+            <span class="badge b-assume">ядро: Beatsync, MIT — подтвердить</span>
+          </div>
+          <p>NTP-подобный обмен метками времени поверх WebSocket; клиент выравнивает позицию воспроизведения с точностью до миллисекунд.</p>
+        </div>
+      </div>
+
+      <div class="card hl-card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <h3>2. P2P-передача</h3>
+            <span class="badge b-code">WebRTC</span>
+          </div>
+          <p>Файл идёт напрямую между браузерами (WebRTC DataChannel). Сервер не видит содержимое — ниже трафик и нет хранения чужих файлов.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <h3>3. TURN-fallback</h3>
+            <span class="badge b-assume">допущение ≈15%</span>
+          </div>
+          <p>Для симметричного NAT — план: coturn на том же VPS (трафик безлимитный). Доля relay-сессий ≈15% — допущение, будем измерять на публичном пилоте.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Стек ядра Beatsync: <b>Bun (HTTP+WebSocket) + Next.js + TypeScript</b>, NTP-inspired sync, MIT (github.com/freeman-jiang/beatsync). Происхождение ядра TrackTribe — допущение, подтвердить и зафиксировать в репозитории/NOTICE.</div>
+    <div class="pageno">04 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     5 · РЫНОК
+     ========================================================= -->
+<section class="slide" data-title="05 · Рынок (TAM / SAM / SOM)">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">05 · Рынок</div>
+      <span class="badge b-verified">Оценка Bottom-Up</span>
+    </div>
+    <h2>Считаем снизу вверх, а не от стриминга</h2>
+    <p class="sub">Стриминг — фон («музыку слушают все»). Наш рынок — ниша совместного прослушивания своих файлов.</p>
+  </div>
+
+  <div class="body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <h3>Фон: музыкальный стриминг РФ</h3>
+            <span class="badge b-verified">проверено</span>
+          </div>
+          <ul class="clean-list">
+            <li>Рынок музыкального стриминга РФ: <b class="num">38 млрд ₽</b> (2024, +51%) → <b class="num">46 млрд ₽</b> (2025, +23%).</li>
+            <li>Лидер — «Яндекс Музыка»: доля <b class="num">50,9%</b> (2024); «VK Музыка» — <b class="num">26,5%</b>.</li>
+            <li>Российские сервисы занимают <b class="num">96,9%</b> рынка (НФМИ, 2024).</li>
+          </ul>
+        </div>
+        <div style="margin-top:10px;padding:8px 12px;background:var(--paper2);border-radius:8px;font-size:11.8px;color:var(--mut)">
+          <b>Важно:</b> это не наш TAM — мы не продаём каталог и не конкурируем за подписку стриминга.
+        </div>
+      </div>
+
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <h3>Аудитория ниши (расчёт снизу вверх)</h3>
+            <span class="badge b-assume">допущения помечены</span>
+          </div>
+          <ul class="clean-list">
+            <li>Студенты вузов: <b class="num">4,66 млн</b> (Минобрнауки, 01.09.2025) <span class="badge b-verified">проверено</span></li>
+            <li>Студенты СПО: <b class="num">3,27 млн</b> (2024) <span class="badge b-verified">проверено</span></li>
+            <li>Итого молодых: <b class="num">≈7,9 млн</b> → групп друзей/пар ≈ <b class="num">2,64 млн</b> (по 3 чел.) <span class="badge b-assume">допущение</span></li>
+            <li>Доля групп с регулярным дистанционным сценарием: <b class="num">20%</b> <span class="badge b-assume">допущение</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="grid-template-columns:repeat(3,1fr)">
+      <div class="card" style="background:var(--paper2)">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="num" style="font-size:11px;font-weight:700;color:var(--mut)">TAM · ТЕОРЕТИЧЕСКИЙ ПОТОЛОК НИШИ</span>
+            <span class="badge b-assume">допущение</span>
+          </div>
+          <div class="big" style="font-size:30px">≈ 4,8 млрд ₽/год</div>
+        </div>
+        <div class="lbl" style="margin-top:8px">
+          Формула: <span class="num">2,64 млн групп × 150 ₽ × 12 мес</span>
+        </div>
+      </div>
+
+      <div class="card" style="background:var(--paper2)">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="num" style="font-size:11px;font-weight:700;color:var(--mut)">SAM · ДИСТАНЦИОННЫЙ СЦЕНАРИЙ</span>
+            <span class="badge b-assume">допущение</span>
+          </div>
+          <div class="big" style="font-size:30px">≈ 952 млн ₽/год</div>
+        </div>
+        <div class="lbl" style="margin-top:8px">
+          Формула: <span class="num">20% × 2,64 млн групп × 1 800 ₽/год</span>
+        </div>
+      </div>
+
+      <div class="card hl-card" style="border-width:2px">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="num" style="font-size:11px;font-weight:700;color:var(--rose-ink)">SOM · ЦЕЛЬ НА 12 МЕС (БАЗОВЫЙ ПЛАН)</span>
+            <span class="badge b-code">из модели</span>
+          </div>
+          <div class="big" style="font-size:30px">90 000 ₽/год</div>
+        </div>
+        <div class="lbl" style="margin-top:8px;color:var(--ink-soft)">
+          <span class="num">50 Pro × 1 800 ₽ · MRR 7 500 ₽ · 0,0095% SAM</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Источники: <b>Ведомости 13.08.2025 · Коммерсантъ 19.05.2026 · smart-lab.ru</b> (доли 2024) · <b>НФМИ 11.05.2025 · t-j.ru/statistic-univercitites</b> (4,66 млн) · <b>fa.ru</b> (СПО 3,27 млн). Формула SOM сходится с финпланом (слайд 10).</div>
+    <div class="pageno">05 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     6 · КОНКУРЕНТЫ
+     ========================================================= -->
+<section class="slide" data-title="06 · Конкуренты">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">06 · Конкуренты</div>
+      <span class="badge b-verified">Сравнительная матрица</span>
+    </div>
+    <h2>Наша ниша: без аккаунта + свои файлы + работает в РФ</h2>
+    <p class="sub">Не утверждаем «ни один аналог в мире» — утверждаем проверяемое: в этой таблице ни один аналог не сочетает все три свойства.</p>
+  </div>
+
+  <div class="body">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:210px">Критерий</th>
+            <th class="hl" style="color:var(--rose-ink);font-size:11px">★ TrackTribe</th>
+            <th>Spotify Jam</th>
+            <th>Rave</th>
+            <th>Discord</th>
+            <th>Beatsync (self-host)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Вход без аккаунта</b></td>
+            <td class="hl yes">✓ ник + QR/код</td>
+            <td class="no">✕ аккаунт + Premium у хоста</td>
+            <td class="no">✕ аккаунт</td>
+            <td class="no">✕ аккаунт</td>
+            <td class="mid">~ без аккаунта, но свой сервер</td>
+          </tr>
+          <tr>
+            <td><b>Свои локальные файлы</b></td>
+            <td class="hl yes">✓ P2P напрямую</td>
+            <td class="no">✕ только каталог</td>
+            <td class="no">✕ стриминги</td>
+            <td class="mid">~ вложения/боты</td>
+            <td class="yes">✓ поддерживаются</td>
+          </tr>
+          <tr>
+            <td><b>Синхронность</b></td>
+            <td class="hl yes">✓ индикатор Sync</td>
+            <td class="yes">✓ высокая</td>
+            <td class="yes">✓ высокая</td>
+            <td class="mid">~ голосовые каналы</td>
+            <td class="yes">✓ NTP-подобная</td>
+          </tr>
+          <tr>
+            <td><b>Цена</b></td>
+            <td class="hl"><b class="num">Free / Pro 150 ₽</b></td>
+            <td>Premium (подписка)</td>
+            <td>бесплатно + реклама</td>
+            <td>бесплатно</td>
+            <td class="num">0 ₽ + свой VPS</td>
+          </tr>
+          <tr>
+            <td><b>Работает в РФ</b></td>
+            <td class="hl yes">✓ без ограничений</td>
+            <td class="no">✕ ушёл 11.04.2022</td>
+            <td class="mid">~ с перебоями</td>
+            <td class="mid">~ ограничен в РФ</td>
+            <td class="yes">✓ self-host</td>
+          </tr>
+          <tr>
+            <td><b>Не требует настройки</b></td>
+            <td class="hl yes">✓ готовый хостед</td>
+            <td class="yes">✓</td>
+            <td class="yes">✓</td>
+            <td class="yes">✓</td>
+            <td class="no">✕ нужен сервер и навыки</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card accent-left" style="padding:14px 18px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+        <p style="font-size:13.2px;color:var(--ink)">
+          <b>Вывод:</b> Spotify Jam требует Premium и недоступен в РФ; Beatsync — открытый (MIT), но это self-host с техническим порогом. <b>TrackTribe</b> — готовый хостед-вариант для русскоязычных «своих»: без аккаунта, со своими файлами и записями, вход по QR.
+        </p>
+        <span class="badge b-verified">по источникам ниже</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Источники: <b>support.spotify.com/us/article/jam</b> (Premium для хоста) · <b>Фонтанка 07.04.2022 / ТАСС 17.12.2023</b> (уход Spotify из РФ) · <b>github.com/freeman-jiang/beatsync</b> (MIT, self-host) · beatsync.gg. Rave/Discord — по публичным описаниям сервисов.</div>
+    <div class="pageno">06 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     7 · БИЗНЕС-МОДЕЛЬ
+     ========================================================= -->
+<section class="slide" data-title="07 · Бизнес-модель">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">07 · Бизнес-модель</div>
+      <span class="badge b-code">Freemium · Подписка Pro</span>
+    </div>
+    <h2>Free по лимитам из кода, Pro — 150 ₽/мес</h2>
+    <p class="sub">Монетизация совпадает с продуктом. Хранилище — не статья дохода: аудио идёт P2P, сервер ничего не хранит.</p>
+  </div>
+
+  <div class="body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+      <div class="card">
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:10px">
+            <div style="display:flex;align-items:baseline;gap:10px">
+              <h3 style="font-size:22px;margin:0">Free</h3>
+              <span class="big" style="font-size:24px;color:var(--ink)">0 ₽</span>
+            </div>
+            <span class="badge b-code">из кода</span>
+          </div>
+          <ul class="clean-list">
+            <li>До <b>10 участников</b> в комнате</li>
+            <li>До <b>20 треков</b> в очереди воспроизведения</li>
+            <li><b>2 часа</b> — длительность одной сессии</li>
+            <li>Вход по QR/коду, псевдоним, RU/EN, три темы, P2P-передача</li>
+          </ul>
+        </div>
+        <div style="margin-top:10px;padding:8px 12px;background:var(--paper2);border-radius:8px;font-size:11.8px;color:var(--mut)">
+          Лимиты уже зашиты в коде продукта — это не гипотеза, а текущее поведение системы.
+        </div>
+      </div>
+
+      <div class="card hl-card" style="border-width:2px">
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--rose-border);margin-bottom:10px">
+            <div style="display:flex;align-items:baseline;gap:10px">
+              <h3 style="font-size:22px;margin:0;color:var(--rose-ink)">Pro</h3>
+              <span class="big" style="font-size:24px">150 ₽/мес</span>
+            </div>
+            <span class="badge b-code">цена из кода</span>
+          </div>
+          <ul class="clean-list">
+            <li>Расширенная комната до <b>25 участников</b> <span class="badge b-assume">предложение</span></li>
+            <li>Очередь до <b>100 треков</b> <span class="badge b-assume">предложение</span></li>
+            <li><b>Без лимита</b> времени сессии <span class="badge b-assume">предложение</span></li>
+            <li>Приоритетный TURN-сервер и кастомная тема комнаты <span class="badge b-assume">предложение</span></li>
+            <li>Рекуррентный автоплатёж (ЮKassa поддерживает подписки) <span class="badge b-verified">проверено</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="grid-template-columns:repeat(3,1fr)">
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <span class="lbl" style="margin:0;font-weight:700;color:var(--ink)">Налоговый режим</span>
+            <span class="badge b-verified">проверено</span>
+          </div>
+          <div style="font-weight:700;font-size:14.5px;color:var(--rose-ink);margin-bottom:4px">НПД (самозанятость)</div>
+          <p>Ставка 4% с физлиц · лимит 2,4 млн ₽/год · без фиксированных взносов · быстрая регистрация через «Мой налог».</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <span class="lbl" style="margin:0;font-weight:700;color:var(--ink)">Приём платежей</span>
+            <span class="badge b-verified">проверено</span>
+          </div>
+          <div style="font-weight:700;font-size:14.5px;color:var(--rose-ink);margin-bottom:4px">ЮKassa для самозанятых</div>
+          <p>Банковские карты: 3,5% + НДС на комиссию · встроенные автоплатежи · плательщики — физлица.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <span class="lbl" style="margin:0;font-weight:700;color:var(--ink)">Почему не хранилище</span>
+            <span class="badge b-code">архитектура</span>
+          </div>
+          <div style="font-weight:700;font-size:14.5px;color:var(--rose-ink);margin-bottom:4px">P2P = нет затрат на аудио</div>
+          <p>Сервер не хранит файлы → нет платы за GB и нет чужого контента на диске. Это преимущество, а не доход.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Источники: код продукта (лимиты, цена Pro) · <b>yookassa.ru/platezhi-dlya-samozanyatyh</b> (комиссии, автоплатежи, ограничения) · <b>npd.nalog.ru</b> (ставки 4/6%) · <b>422-ФЗ ст.4</b> (лимит 2,4 млн ₽). Состав Pro-функций — предложение команды, помечено.</div>
+    <div class="pageno">07 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     8 · ЮНИТ-ЭКОНОМИКА
+     ========================================================= -->
+<section class="slide" data-title="08 · Юнит-экономика">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">08 · Юнит-экономика</div>
+      <span class="badge b-verified">Маржинальность 91,7%</span>
+    </div>
+    <h2>Каждый Pro приносит 137,6 ₽ вклада; безубыточность — 16 Pro</h2>
+    <p class="sub">Считаем по проверяемым тарифам. Маржинальная себестоимость комнаты ≈ 0 (P2P, безлимитный трафик VPS).</p>
+  </div>
+
+  <div class="body">
+    <div style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:20px;flex:1;align-items:stretch">
+      <div class="card" style="justify-content:space-between">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <h3>Водопад с одного Pro-месяца (150 ₽)</h3>
+            <span class="badge b-verified">точные тарифы</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Статья расчёта</th>
+                  <th style="text-align:right">Сумма</th>
+                  <th style="text-align:right">Доля</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Цена подписки Pro</b></td>
+                  <td class="num" style="text-align:right"><b>150,00 ₽</b></td>
+                  <td class="num" style="text-align:right;color:var(--mut)">100,00%</td>
+                </tr>
+                <tr>
+                  <td>Эквайринг ЮKassa: 3,5% + НДС 22% на комиссию</td>
+                  <td class="num" style="text-align:right;color:var(--bad)">−6,41 ₽</td>
+                  <td class="num" style="text-align:right;color:var(--mut)">4,27%</td>
+                </tr>
+                <tr>
+                  <td>Налог НПД 4% (доход от физлиц)</td>
+                  <td class="num" style="text-align:right;color:var(--bad)">−6,00 ₽</td>
+                  <td class="num" style="text-align:right;color:var(--mut)">4,00%</td>
+                </tr>
+                <tr>
+                  <td>Переменные затраты на комнату (P2P + безлимит VPS)</td>
+                  <td class="num" style="text-align:right;color:var(--ok)">0,00 ₽</td>
+                  <td class="num" style="text-align:right;color:var(--mut)">0,00%</td>
+                </tr>
+                <tr class="hl">
+                  <td><b>Чистый маржинальный вклад (Contribution Margin)</b></td>
+                  <td class="num" style="text-align:right;color:var(--rose-ink);font-size:14px"><b>137,60 ₽</b></td>
+                  <td class="num" style="text-align:right;color:var(--rose-ink);font-weight:700"><b>91,73%</b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px;color:var(--mut)">
+            <span>Структура 150 ₽ платежа:</span>
+            <span class="num">91,7% чистый вклад · 8,3% комиссии и налог</span>
+          </div>
+          <div style="display:flex;height:12px;border-radius:99px;overflow:hidden;background:var(--paper2)">
+            <div style="width:91.73%;background:var(--grad)"></div>
+            <div style="width:4.27%;background:var(--warn)"></div>
+            <div style="width:4.00%;background:var(--bad)"></div>
+          </div>
+          <p style="font-size:11.5px;color:var(--mut);margin-top:8px">
+            Переменные затраты на комнату ≈ 0: аудио идёт P2P, трафик VPS безлимитный. Фиксированные затраты покрываются вкладом подписок.
+          </p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-rows:repeat(3,1fr);gap:12px">
+        <div class="card" style="background:var(--paper2)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="lbl" style="margin:0;font-weight:600">Фиксированные затраты / мес (run-rate)</span>
+            <span class="badge b-assume">бэкапы — допущение</span>
+          </div>
+          <div class="big" style="font-size:28px;margin:4px 0">2 120 ₽</div>
+          <div class="lbl">VPS 1 920 ₽ (Timeweb) + резервные копии 200 ₽</div>
+        </div>
+
+        <div class="card hl-card" style="border-width:2px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="lbl" style="margin:0;font-weight:700;color:var(--rose-ink)">Точка безубыточности (run-rate)</span>
+            <span class="badge b-verified">расчёт</span>
+          </div>
+          <div class="big" style="font-size:32px;margin:4px 0">16 Pro</div>
+          <div class="lbl" style="color:var(--ink-soft)">
+            <span class="num">2 120 ₽ ÷ 137,60 ₽ = 15,4 → 16 подписок · MRR 2 400 ₽</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="lbl" style="margin:0;font-weight:600">Себестоимость новой комнаты</span>
+            <span class="badge b-code">P2P</span>
+          </div>
+          <div class="big" style="font-size:28px;margin:4px 0;color:var(--ok)">≈ 0 ₽</div>
+          <div class="lbl">маржинально: сигналинг + часы на общем VPS, аудио P2P</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Источники: <b>timeweb.cloud/services/vds-vps</b> (MSK Ultra 15 = 1 920 ₽/мес, трафик безлимит) · <b>yookassa.ru/platezhi-dlya-samozanyatyh</b> (3,5% + НДС) · <b>npd.nalog.ru</b> (4%). НДС 22% — ставка 2026 г.; при 20% вклад = 137,70 ₽ (чувствительность &lt;0,1%).</div>
+    <div class="pageno">08 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     9 · GO-TO-MARKET
+     ========================================================= -->
+<section class="slide" data-title="09 · Go-to-market">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">09 · Go-to-market</div>
+      <span class="badge b-code">CAC на старте ≈ 0 ₽</span>
+    </div>
+    <h2>Органика + QR-реферал, встроенный в продукт</h2>
+    <p class="sub">Платного бюджета в запросе нет. CAC на старте ≈ 0 за счёт органических каналов и вирусной механики приглашений.</p>
+  </div>
+
+  <div class="body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;align-items:stretch">
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <h3>Органические каналы (бюджет 0 ₽)</h3>
+            <span class="badge b-verified">7,9 млн студентов</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:12px;align-items:flex-start;padding:8px 10px;background:var(--paper2);border-radius:10px">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace">VK/TG</span>
+              <p style="color:var(--ink-soft)"><b>Университетские сообщества:</b> наша аудитория уже там — 7,9 млн студентов вузов и СПО.</p>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;padding:8px 10px;background:var(--paper2);border-radius:10px">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace">Посевы</span>
+              <p style="color:var(--ink-soft)"><b>Тематические Telegram-каналы</b> про инди-музыку, отношения на расстоянии, семейные архивы.</p>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;padding:8px 10px;background:var(--paper2);border-radius:10px">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace">Сториз</span>
+              <p style="color:var(--ink-soft)"><b>Контент-маркетинг:</b> истории «послушали запись папы вместе» — эмоциональный, шеринговый формат.</p>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;padding:8px 10px;background:var(--paper2);border-radius:10px">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace">Поиск</span>
+              <p style="color:var(--ink-soft)"><b>SEO-запросы:</b> «слушать музыку вместе онлайн», «совместное прослушивание без регистрации».</p>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;padding:8px 10px;background:var(--paper2);border-radius:10px">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace">Офлайн</span>
+              <p style="color:var(--ink-soft)"><b>QR на офлайн-точках:</b> коворкинги, общежития, кампусные кафе — «отсканируй и слушай вместе».</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card hl-card" style="justify-content:space-between">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <h3>Продуктовая петля роста (Viral Loop)</h3>
+            <span class="badge b-code">встроено в UX</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <div style="display:flex;align-items:center;gap:12px;background:var(--paper2);padding:10px 14px;border-radius:10px;border:1px solid var(--line)">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace;font-weight:800">Шаг 1</span>
+              <span style="font-size:13.5px;font-weight:500;color:var(--ink-soft)"><b>Free-комната</b> → участник получает ценность за секунды</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:var(--paper2);padding:10px 14px;border-radius:10px;border:1px solid var(--line)">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace;font-weight:800">Шаг 2</span>
+              <span style="font-size:13.5px;font-weight:500;color:var(--ink-soft)"><b>QR-приглашение</b> → друг входит мгновенно без аккаунта</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:var(--paper2);padding:10px 14px;border-radius:10px;border:1px solid var(--line)">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace;font-weight:800">Шаг 3</span>
+              <span style="font-size:13.5px;font-weight:500;color:var(--ink-soft)"><b>Лимит Free</b> (2 ч / 20 треков) → естественный триггер в Pro</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:var(--paper2);padding:10px 14px;border-radius:10px;border:1px solid var(--line)">
+              <span class="pill" style="font-family:'JetBrains Mono',monospace;font-weight:800">Шаг 4</span>
+              <span style="font-size:13.5px;font-weight:500;color:var(--ink-soft)"><b>Реферал:</b> «пригласи друга → получи +1 мес Pro» <span class="badge b-assume">оффер</span></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:var(--rose-soft);padding:10px 14px;border-radius:10px;border:1px solid var(--rose)">
+              <span class="pill" style="background:var(--rose);color:#131317;border-color:var(--rose);font-family:'JetBrains Mono',monospace;font-weight:800">Шаг 5</span>
+              <span style="font-size:13.5px;font-weight:700;color:var(--rose-ink)">Гость сам создаёт новую комнату → петля замыкается ↻</span>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:12.2px;color:var(--mut);margin-top:10px;padding-top:10px;border-top:1px solid var(--rose-border)">
+          Реферал через QR уже заложен в механику приглашений. Платный тест (≤2 000 ₽) — только после подтверждённой конверсии, из выручки, не из запроса.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Аудитория: <b>t-j.ru/statistic-univercitites</b> (4,66 млн вузов) · <b>fa.ru</b> (3,27 млн СПО). Механика приглашений и лимиты — из кода продукта. Реферальный оффер — предложение команды.</div>
+    <div class="pageno">09 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     10 · ФИНАНСОВЫЙ ПЛАН
+     ========================================================= -->
+<section class="slide" data-title="10 · Финансовый план">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">10 · Финансовый план</div>
+      <span class="badge b-code">3 сценария · 12 месяцев</span>
+    </div>
+    <h2>Три сценария на 12 месяцев — все цифры сходятся</h2>
+    <p class="sub">Выручка = подписко-месяцы × 150 ₽. Переменные = 8,27% (эквайринг 4,27% + НПД 4%). Фиксированные = 25 609 ₽.</p>
+  </div>
+
+  <div class="body" style="justify-content:space-between">
+    <div class="table-wrap">
+      <table style="font-size:12px">
+        <thead>
+          <tr>
+            <th style="padding:6px 12px">Показатель (за 12 месяцев)</th>
+            <th style="padding:6px 12px;text-align:right">Консервативный</th>
+            <th class="hl" style="padding:6px 12px;text-align:right;color:var(--rose-ink)">Базовый сценарий ★</th>
+            <th style="padding:6px 12px;text-align:right">Оптимистичный</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:5.5px 12px">Активных Pro-подписок на 12-й месяц</td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">15</td>
+            <td class="num hl" style="padding:5.5px 12px;text-align:right"><b>50</b></td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">135</td>
+          </tr>
+          <tr>
+            <td style="padding:5.5px 12px">Оплаченных подписко-месяцев за год</td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">65</td>
+            <td class="num hl" style="padding:5.5px 12px;text-align:right"><b>210</b></td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">501</td>
+          </tr>
+          <tr>
+            <td style="padding:5.5px 12px">Валовая выручка (Gross Revenue)</td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">9 750 ₽</td>
+            <td class="num hl" style="padding:5.5px 12px;text-align:right"><b>31 500 ₽</b></td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">75 150 ₽</td>
+          </tr>
+          <tr>
+            <td style="padding:5.5px 12px">Эквайринг ЮKassa (4,27%)</td>
+            <td class="num" style="padding:5.5px 12px;text-align:right;color:var(--bad)">−416 ₽</td>
+            <td class="num hl" style="padding:5.5px 12px;text-align:right;color:var(--bad)">−1 345 ₽</td>
+            <td class="num" style="padding:5.5px 12px;text-align:right;color:var(--bad)">−3 209 ₽</td>
+          </tr>
+          <tr>
+            <td style="padding:5.5px 12px">Налог НПД (4,00%)</td>
+            <td class="num" style="padding:5.5px 12px;text-align:right;color:var(--bad)">−390 ₽</td>
+            <td class="num hl" style="padding:5.5px 12px;text-align:right;color:var(--bad)">−1 260 ₽</td>
+            <td class="num" style="padding:5.5px 12px;text-align:right;color:var(--bad)">−3 006 ₽</td>
+          </tr>
+          <tr>
+            <td style="padding:5.5px 12px"><b>Чистая выручка (маржинальный вклад)</b></td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">8 944 ₽</td>
+            <td class="num hl" style="padding:5.5px 12px;text-align:right"><b>28 895 ₽</b></td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">68 935 ₽</td>
+          </tr>
+          <tr>
+            <td style="padding:5.5px 12px">Фиксированные инфраструктурные затраты</td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">25 609 ₽</td>
+            <td class="num hl" style="padding:5.5px 12px;text-align:right">25 609 ₽</td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">37 129 ₽ *</td>
+          </tr>
+          <tr class="hl">
+            <td style="padding:6.5px 12px"><b>Чистая прибыль за 12 мес (Net Profit)</b></td>
+            <td class="num" style="padding:6.5px 12px;text-align:right;color:var(--bad)"><b>−16 665 ₽</b></td>
+            <td class="num" style="padding:6.5px 12px;text-align:right;color:var(--ok);font-size:13.5px"><b>+3 286 ₽</b></td>
+            <td class="num" style="padding:6.5px 12px;text-align:right;color:var(--ok)"><b>+31 806 ₽</b></td>
+          </tr>
+          <tr>
+            <td style="padding:5.5px 12px">MRR на 12-й месяц</td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">2 250 ₽</td>
+            <td class="num hl" style="padding:5.5px 12px;text-align:right"><b>7 500 ₽</b></td>
+            <td class="num" style="padding:5.5px 12px;text-align:right">20 250 ₽</td>
+          </tr>
+          <tr>
+            <td style="padding:5.5px 12px">Run-rate безубыточность (≥16 Pro)</td>
+            <td style="padding:5.5px 12px;text-align:right;color:var(--mut)">не достигается</td>
+            <td class="hl" style="padding:5.5px 12px;text-align:right;color:var(--rose-ink)"><b>месяц 7</b></td>
+            <td style="padding:5.5px 12px;text-align:right">месяц 6</td>
+          </tr>
+          <tr>
+            <td style="padding:5.5px 12px">Накопленная безубыточность (окупаемость года)</td>
+            <td style="padding:5.5px 12px;text-align:right;color:var(--mut)">не достигается</td>
+            <td class="hl" style="padding:5.5px 12px;text-align:right;color:var(--rose-ink)"><b>месяц 12</b></td>
+            <td style="padding:5.5px 12px;text-align:right">месяц 10</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card accent-left" style="padding:10px 16px;background:var(--paper2)">
+      <p style="font-size:11.8px;color:var(--ink-soft)">
+        <b>* Примечание по масштабированию:</b> в оптимистичном сценарии со 7-го месяца добавляется второй VPS под выделенный TURN (<span class="num">+1 920 ₽ × 6 = 11 520 ₽</span>) — полностью покрывается текущей выручкой, в инвестиционный запрос не входит. Консервативный сценарий показывает честный downside: накопленный убыток ≈16,7 тыс. ₽ — риск, а не обещание.
+      </p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Модель команды: тарифы VPS/эквайринга/НПД — по источникам слайдов 7–8; траектории подписок — допущение. SOM (слайд 5) = MRR базового сценария × 12 = 90 000 ₽. Все суммы пересчитаны построчно.</div>
+    <div class="pageno">10 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     11 · РИСКИ И МЕРЫ
+     ========================================================= -->
+<section class="slide" data-title="11 · Риски и меры">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">11 · Риски и меры</div>
+      <span class="badge b-verified">Право · Инфраструктура · Лицензии</span>
+    </div>
+    <h2>Каждый риск закрыт конкретной мерой, а не обещанием</h2>
+    <p class="sub">Архитектурно исключили хранение контента и персональных аккаунтов, а для инфраструктуры заложили резервирование.</p>
+  </div>
+
+  <div class="body">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:14px;flex:1">
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="pill" style="font-family:'JetBrains Mono',monospace">01 · Контент</span>
+            <span class="num" style="font-size:11px;font-weight:700;color:var(--ok)">0 ₽ · мес 2</span>
+          </div>
+          <h3>Авторские права на музыку</h3>
+          <p style="margin-top:4px">Только личные файлы участников; каталога нет; аудио не хранится на сервере (P2P). Оферта возлагает ответственность на пользователя + процедура takedown. Юрконсультация — университетская юрклиника.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="pill" style="font-family:'JetBrains Mono',monospace">02 · 152-ФЗ</span>
+            <span class="badge b-verified">0 ₽ · мес 1 · проверено</span>
+          </div>
+          <h3>Персональные данные (РКН)</h3>
+          <p style="margin-top:4px">Минимум данных: ник, IP, cookie по согласию; аккаунтов нет. Политики опубликованы. <b>Уведомление РКН обязательно</b> до начала обработки (с 01.09.2022, 266-ФЗ) — подаём через электронную форму.</p>
+        </div>
+      </div>
+
+      <div class="card hl-card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="pill" style="font-family:'JetBrains Mono',monospace">03 · Отказоустойчивость</span>
+            <span class="badge b-assume">200 ₽/мес · допущение</span>
+          </div>
+          <h3>Один провайдер / сервер</h3>
+          <p style="margin-top:4px">Ежедневные дампы + снапшоты; резервный провайдер готов к переключению. Реальный прецедент: кибератака на Beget 02.11.2026 с массовым восстановлением — поэтому бэкапы и мультипровайдер заложены с 1-го дня.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="pill" style="font-family:'JetBrains Mono',monospace">04 · Сеть</span>
+            <span class="num" style="font-size:11px;font-weight:700;color:var(--ok)">0 ₽ на старте</span>
+          </div>
+          <h3>P2P за симметричным NAT</h3>
+          <p style="margin-top:4px">TURN-fallback (coturn) — план: развернуть на том же VPS (трафик безлимитный). Доля relay ≈15% — допущение, будем измерять на пилоте; при росте нагрузки — выделенный VPS из выручки.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="pill" style="font-family:'JetBrains Mono',monospace">05 · Open Source</span>
+            <span class="badge b-assume">0 ₽ · мес 1 · подтвердить</span>
+          </div>
+          <h3>Лицензия открытого ядра</h3>
+          <p style="margin-top:4px">Beatsync распространяется под лицензией MIT: сохраняем copyright/NOTICE, прозрачно указываем объём доработок в репозитории. Происхождение ядра подтверждаем до защиты.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="pill" style="font-family:'JetBrains Mono',monospace">06 · Налоги</span>
+            <span class="num" style="font-size:11px;font-weight:700;color:var(--ok)">0 ₽ · по триггеру</span>
+          </div>
+          <h3>Лимит НПД 2,4 млн ₽/год</h3>
+          <p style="margin-top:4px">Годовой план на порядок ниже лимита самозанятости. При приближении к порогу — бесшовный переход на ИП УСН 6% (сценарий заранее просчитан).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Источники: <b>pd.rkn.gov.ru/operators-registry/notification · old.rkn.gov.ru/news/rsoc/news74488.htm</b> (уведомление с 01.09.2022) · <b>422-ФЗ ст.4</b> (лимит НПД) · <b>github.com/freeman-jiang/beatsync</b> (MIT) · <b>beget.com/ru/vps</b> (страница восстановления после инцидента 02.11.2026).</div>
+    <div class="pageno">11 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     12 · КОМАНДА
+     ========================================================= -->
+<section class="slide" data-title="12 · Команда">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">12 · Команда</div>
+      <span class="badge b-code">РТУ МИРЭА · ЭФБО-04-23</span>
+    </div>
+    <h2>Двое, полный цикл, два семестра вместе</h2>
+    <p class="sub">Продукт, код, аналитика и лендинг — своими силами. ФОТ в запросе отсутствует.</p>
+  </div>
+
+  <div class="body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div class="card">
+        <div>
+          <div style="display:flex;align-items:center;gap:16px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px">
+            <div style="width:54px;height:54px;border-radius:16px;background:var(--grad);display:grid;place-items:center;color:#fff;font-family:'Playfair Display',serif;font-size:24px;font-weight:800;box-shadow:0 6px 14px rgba(196,121,139,0.3)">З</div>
+            <div style="flex:1">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <h3 style="font-size:20px;margin:0">Меджидов Заур</h3>
+                <span class="pill">Тимлид · Разработка</span>
+              </div>
+              <div class="lbl" style="margin-top:3px">Backend, WebRTC/WebSocket, инфраструктура</div>
+            </div>
+          </div>
+          <ul class="clean-list">
+            <li>Ядро синхронизации часов, WebSocket-сервер, P2P-транспорт</li>
+            <li>Инфраструктура: настройка VPS, TURN (coturn), бэкапы, CI/CD деплой</li>
+            <li>Продуктовая логика: лимиты Free/Pro, автоплатёж, индикатор Sync</li>
+          </ul>
+        </div>
+        <div style="margin-top:14px;padding-top:10px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;align-items:center">
+          <span class="lbl" style="margin:0">Прямой контакт в Telegram:</span>
+          <span class="num" style="font-size:12.5px;color:var(--rose-ink);font-weight:700">t.me/leukotomyenjoyer</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div>
+          <div style="display:flex;align-items:center;gap:16px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px">
+            <div style="width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,#D9A08C,#C4798B);display:grid;place-items:center;color:#fff;font-family:'Playfair Display',serif;font-size:24px;font-weight:800;box-shadow:0 6px 14px rgba(217,160,140,0.3)">А</div>
+            <div style="flex:1">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <h3 style="font-size:20px;margin:0">Амини Аким</h3>
+                <span class="pill">Аналитик · Продукт</span>
+              </div>
+              <div class="lbl" style="margin-top:3px">Финансовая модель, UX/UI, маркетинг и право</div>
+            </div>
+          </div>
+          <ul class="clean-list">
+            <li>Продуктовые метрики, финансовая модель (3 сценария), юнит-экономика</li>
+            <li>Лендинг, локализация RU/EN, визуальный бренд, политики 152-ФЗ</li>
+            <li>Каналы органического привлечения, механика QR-реферала, пилот</li>
+          </ul>
+        </div>
+        <div style="margin-top:14px;padding-top:10px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;align-items:center">
+          <span class="lbl" style="margin:0">Прямой контакт в Telegram:</span>
+          <span class="num" style="font-size:12.5px;color:var(--rose-ink);font-weight:700">t.me/mika52002</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card accent-left" style="background:var(--paper2)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <h3 style="font-size:15px;margin:0">Происхождение кода — прозрачно и честно</h3>
+        <span class="badge b-assume">допущение — подтвердить</span>
+      </div>
+      <p style="font-size:12.8px;color:var(--ink-soft)">
+        Прототип собран командой; базовое ядро синхронизации — открытый проект <b>Beatsync (MIT, 3,2k★)</b>. Команда существенно доработала и адаптировала продукт под нишу РФ: полная локализация RU/EN, быстрый QR-вход, система лимитов Free/Pro, дизайн-система и три темы, юридические политики, P2P-сценарий для личных записей. Лицензия MIT требует сохранения copyright — фиксируем в NOTICE/репозитории. Если ядро полностью собственное — убираем эту оговорку и указываем 100% авторство.
+      </p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Роли — по таблице курса ЭФБО-04-23 (Меджидов Заур — тимлид, Амини Аким — аналитик). Beatsync: <b>github.com/freeman-jiang/beatsync</b> (MIT). Объём доработок команды — из кода продукта.</div>
+    <div class="pageno">12 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     13 · ИНВЕСТИЦИОННЫЙ ЗАПРОС
+     ========================================================= -->
+<section class="slide dark" data-title="13 · Инвестиционный запрос">
+  <div class="glow" style="width:460px;height:460px;right:-120px;top:-140px;background:radial-gradient(circle,#C4798B,transparent 65%)"></div>
+  <div class="grain"></div>
+
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">13 · Инвестиционный запрос</div>
+      <span class="badge b-code">Pre-seed · 3 транша по KPI</span>
+    </div>
+    <h2>28 682 ₽ на 12 месяцев — построчно, без «круглых сумм»</h2>
+    <p class="sub">Только инфраструктура и резерв. ФОТ, лендинг, TLS, аналитика, маркетинг — 0 ₽ (собственный труд и бесплатные тарифы).</p>
+  </div>
+
+  <div class="body">
+    <div style="display:grid;grid-template-columns:1.08fr 0.92fr;gap:18px;align-items:stretch">
+      <div style="display:flex;flex-direction:column;justify-content:space-between">
+        <div class="table-wrap">
+          <table style="font-size:11.8px">
+            <thead>
+              <tr>
+                <th style="padding:6px 10px">Статья расходов (12 мес)</th>
+                <th style="padding:6px 10px;text-align:right">Расчёт</th>
+                <th style="padding:6px 10px;text-align:right">Сумма</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding:5px 10px">VPS · Timeweb MSK Ultra 15 <span class="badge b-verified">тариф</span></td>
+                <td class="num" style="padding:5px 10px;text-align:right">1 920 ₽ × 12</td>
+                <td class="num" style="padding:5px 10px;text-align:right">23 040 ₽</td>
+              </tr>
+              <tr>
+                <td style="padding:5px 10px">Домен .ru · reg.ru, 1-й год <span class="badge b-verified">тариф</span></td>
+                <td class="num" style="padding:5px 10px;text-align:right">169 ₽ × 1</td>
+                <td class="num" style="padding:5px 10px;text-align:right">169 ₽</td>
+              </tr>
+              <tr>
+                <td style="padding:5px 10px">Резервные копии <span class="badge b-assume">допущение</span></td>
+                <td class="num" style="padding:5px 10px;text-align:right">200 ₽ × 12</td>
+                <td class="num" style="padding:5px 10px;text-align:right">2 400 ₽</td>
+              </tr>
+              <tr>
+                <td style="padding:5px 10px">TURN (план: coturn на том же VPS)</td>
+                <td class="num" style="padding:5px 10px;text-align:right;color:#8E878B">трафик безлимит</td>
+                <td class="num" style="padding:5px 10px;text-align:right;color:#7CE0B0">0 ₽</td>
+              </tr>
+              <tr>
+                <td style="padding:5px 10px">TLS (Let's Encrypt) + Лендинг (GitHub Pages)</td>
+                <td class="num" style="padding:5px 10px;text-align:right;color:#8E878B">бесплатно</td>
+                <td class="num" style="padding:5px 10px;text-align:right;color:#7CE0B0">0 ₽</td>
+              </tr>
+              <tr>
+                <td style="padding:5px 10px">Аналитика · Яндекс.Метрика</td>
+                <td class="num" style="padding:5px 10px;text-align:right;color:#8E878B">бесплатно</td>
+                <td class="num" style="padding:5px 10px;text-align:right;color:#7CE0B0">0 ₽</td>
+              </tr>
+              <tr>
+                <td style="padding:5px 10px">ФОТ и маркетинг</td>
+                <td class="num" style="padding:5px 10px;text-align:right;color:#8E878B">свой труд / органика</td>
+                <td class="num" style="padding:5px 10px;text-align:right;color:#7CE0B0">0 ₽</td>
+              </tr>
+              <tr>
+                <td style="padding:5px 10px">Резерв 12% от 25 609 ₽</td>
+                <td class="num" style="padding:5px 10px;text-align:right;color:#F0C27B">по KPI-гейтам</td>
+                <td class="num" style="padding:5px 10px;text-align:right">3 073 ₽</td>
+              </tr>
+              <tr class="hl">
+                <td style="padding:6.5px 10px"><b>ИТОГО ИНВЕСТИЦИОННЫЙ ЗАПРОС</b></td>
+                <td></td>
+                <td class="num" style="padding:6.5px 10px;text-align:right;color:#F0B6C4;font-size:14px"><b>28 682 ₽</b></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="font-size:11px;color:#9B9497;padding:4px 2px">
+          Продление домена со 2-го года — 1 199 ₽/год (reg.ru, 18.03.2026), покрывается выручкой. Эквайринг и НПД — переменные, из выручки (слайд 8).
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px">
+        <div class="card" style="padding:13px 15px">
+          <div>
+            <div class="lbl" style="margin:0;color:#E298AA;font-weight:700">Транш 1 · мес 1–3</div>
+            <div class="big" style="font-size:23px;margin:4px 0 6px">6 529 ₽</div>
+            <p style="font-size:11.6px"><b>Гейт:</b> публичный запуск, уведомление РКН подано, ≥100 комнат, Sync измерен (цель ±100 мс).</p>
+          </div>
+        </div>
+
+        <div class="card" style="padding:13px 15px">
+          <div>
+            <div class="lbl" style="margin:0;color:#E298AA;font-weight:700">Транш 2 · мес 4–6</div>
+            <div class="big" style="font-size:23px;margin:4px 0 6px">6 360 ₽</div>
+            <p style="font-size:11.6px"><b>Гейт:</b> ≥10 активных Pro, P2P-успех ≥85%, TURN-fallback протестирован, первые кейсы.</p>
+          </div>
+        </div>
+
+        <div class="card" style="padding:13px 15px">
+          <div>
+            <div class="lbl" style="margin:0;color:#E298AA;font-weight:700">Транш 3 · мес 7–12</div>
+            <div class="big" style="font-size:23px;margin:4px 0 6px">12 720 ₽</div>
+            <p style="font-size:11.6px"><b>Гейт:</b> ≥50 Pro (база), run-rate BE с мес 7, накопленная BE к мес 12, MRR 7 500 ₽.</p>
+          </div>
+        </div>
+
+        <div class="card hl-card" style="padding:13px 15px">
+          <div>
+            <div class="lbl" style="margin:0;color:#F0B6C4;font-weight:700">Резерв (удерживается)</div>
+            <div class="big" style="font-size:23px;margin:4px 0 6px">3 073 ₽</div>
+            <p style="font-size:11.6px">Высвобождается по факту выполнения гейтов. Сумма траншей + резерв = <b>28 682 ₽</b>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card accent-left" style="padding:10px 16px;background:rgba(34,34,39,0.9)">
+      <p style="font-size:12px;color:#D5CFD2">
+        <b>Сценарий «без финансирования»:</b> лендинг живёт на GitHub Pages (0 ₽), демо работает локально, но публичный WebSocket-сервер требует платного VPS → без денег нет публичных комнат и монетизации. Запрос снимает именно этот барьер. <b>Форма:</b> ресурсная поддержка / конвертируемый займ, стадия pre-seed, доля обсуждается.
+      </p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src">Источники тарифов: <b>timeweb.cloud/services/vds-vps · reg.ru/domain/new/RU · reg.ru/company/news/12897</b>. Контакты: <b>t.me/mika52002</b> (Амини Аким) · <b>t.me/leukotomyenjoyer</b> (Меджидов Заур).</div>
+    <div class="pageno">13 / 14</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     14 · ПРИЛОЖЕНИЕ
+     ========================================================= -->
+<section class="slide" data-title="14 · Приложение: Источники и допущения">
+  <div class="grain"></div>
+  <div class="s-head">
+    <div class="s-head-top">
+      <div class="kick">Приложение · Источники и допущения</div>
+      <span class="badge b-verified">100% прослеживаемость цифр</span>
+    </div>
+    <h2>Что проверено, что допущение</h2>
+  </div>
+
+  <div class="body">
+    <div style="display:grid;grid-template-columns:1.14fr 0.86fr;gap:18px;flex:1;align-items:stretch">
+      <div class="table-wrap" style="display:flex;flex-direction:column">
+        <div style="padding:9px 14px;background:var(--paper2);border-bottom:1.5px solid var(--line);display:flex;justify-content:space-between;align-items:center">
+          <span style="font-weight:700;font-size:13.5px">Проверенные внешние источники (9)</span>
+          <span class="badge b-verified">проверено</span>
+        </div>
+        <table style="font-size:12.2px;flex:1">
+          <tbody>
+            <tr>
+              <td style="width:110px;padding:6px 10px"><b>VPS</b></td>
+              <td style="padding:6px 10px"><span class="num" style="color:var(--rose-ink)">timeweb.cloud/services/vds-vps</span> — MSK Ultra 15: 1 vCPU/1 ГБ/15 ГБ NVMe, 1 Гбит/с, 1 920 ₽/мес, трафик безлимит.</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px"><b>Домен</b></td>
+              <td style="padding:6px 10px"><span class="num" style="color:var(--rose-ink)">reg.ru/domain/new/RU</span> — .ru 169 ₽/год; продление 1 199 ₽ — <span class="num">reg.ru/company/news/12897</span> (18.03.2026).</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px"><b>Эквайринг</b></td>
+              <td style="padding:6px 10px"><span class="num" style="color:var(--rose-ink)">yookassa.ru/platezhi-dlya-samozanyatyh</span> — карты 3,5% + НДС на комиссию; автоплатежи; плательщики — физлица.</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px"><b>Налог</b></td>
+              <td style="padding:6px 10px"><span class="num" style="color:var(--rose-ink)">npd.nalog.ru</span> — НПД 4%/6%; лимит 2,4 млн ₽ — 422-ФЗ ст.4 (<span class="num">consultant.ru</span>).</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px"><b>РКН (152-ФЗ)</b></td>
+              <td style="padding:6px 10px"><span class="num" style="color:var(--rose-ink)">pd.rkn.gov.ru/operators-registry/notification</span> — уведомление обязательно с 01.09.2022 (266-ФЗ).</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px"><b>Рынок</b></td>
+              <td style="padding:6px 10px"><span class="num" style="color:var(--rose-ink)">vedomosti.ru</span> 13.08.2025 (38 млрд, +51%) · <span class="num">kommersant.ru/doc/8671576</span> (46 млрд, +23%) · <span class="num">smart-lab.ru</span> (Яндекс 50,9%, VK 26,5%).</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px"><b>Аудитория</b></td>
+              <td style="padding:6px 10px"><span class="num" style="color:var(--rose-ink)">t-j.ru/statistic-univercitites</span> (4,66 млн студентов вузов) · <span class="num">fa.ru</span> (3,27 млн СПО).</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px"><b>Конкуренты</b></td>
+              <td style="padding:6px 10px"><span class="num" style="color:var(--rose-ink)">support.spotify.com/us/article/jam</span> (Premium у хоста) · <span class="num">fontanka.ru</span> 07.04.2022 / <span class="num">tass.ru</span> 17.12.2023 (уход Spotify) · <span class="num">github.com/freeman-jiang/beatsync</span> (MIT).</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px"><b>Прецедент</b></td>
+              <td style="padding:6px 10px"><span class="num" style="color:var(--rose-ink)">beget.com/ru/vps</span> — восстановление после кибератаки 02.11.2026.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display:flex;flex-direction:column;justify-content:space-between;gap:10px">
+        <div class="card" style="padding:12px 14px;flex:1;justify-content:flex-start">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:8px">
+            <span style="font-weight:700;font-size:13.5px">Допущения команды (помечены в деке)</span>
+            <span class="badge b-assume">8 допущений</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="padding:7px 10px;background:var(--paper2);border:1px solid var(--line);border-radius:8px;font-size:11.8px;line-height:1.38;color:var(--ink-soft)">
+              <b>1. Бэкапы 200 ₽/мес</b> — уточнить по тарифу снапшотов провайдера.
+            </div>
+            <div style="padding:7px 10px;background:var(--paper2);border:1px solid var(--line);border-radius:8px;font-size:11.8px;line-height:1.38;color:var(--ink-soft)">
+              <b>2. Доля TURN ≈15%</b> — доля relay-сессий, измеряем на пилоте.
+            </div>
+            <div style="padding:7px 10px;background:var(--paper2);border:1px solid var(--line);border-radius:8px;font-size:11.8px;line-height:1.38;color:var(--ink-soft)">
+              <b>3. Сегментация</b> — группы = аудитория ÷ 3; дистанционный сценарий 20%.
+            </div>
+            <div style="padding:7px 10px;background:var(--paper2);border:1px solid var(--line);border-radius:8px;font-size:11.8px;line-height:1.38;color:var(--ink-soft)">
+              <b>4. Траектории роста</b> — динамика подписок по 3 сценариям (конс./баз./опт.).
+            </div>
+            <div style="padding:7px 10px;background:var(--paper2);border:1px solid var(--line);border-radius:8px;font-size:11.8px;line-height:1.38;color:var(--ink-soft)">
+              <b>5. Состав Pro</b> — 25 уч. / 100 треков / без лимита времени (предложение; цена 150 ₽ из кода).
+            </div>
+            <div style="padding:7px 10px;background:var(--paper2);border:1px solid var(--line);border-radius:8px;font-size:11.8px;line-height:1.38;color:var(--ink-soft)">
+              <b>6. Открытое ядро</b> — Beatsync (MIT), подтвердить и зафиксировать в NOTICE.
+            </div>
+            <div style="padding:7px 10px;background:var(--paper2);border:1px solid var(--line);border-radius:8px;font-size:11.8px;line-height:1.38;color:var(--ink-soft)">
+              <b>7. Ставка НДС 22%</b> — в комиссии эквайринга (2026); при 20% вклад меняется &lt;0,1%.
+            </div>
+            <div style="padding:7px 10px;background:var(--paper2);border:1px solid var(--line);border-radius:8px;font-size:11.8px;line-height:1.38;color:var(--ink-soft)">
+              <b>8. Рассинхрон ±100 мс</b> — целевой ориентир, будет измеряться индикатором Sync.
+            </div>
+          </div>
+        </div>
+
+        <div class="card hl-card accent-left" style="padding:11px 15px">
+          <p style="font-size:12.6px;color:var(--ink);line-height:1.42">
+            <b>Принцип презентации:</b> ни одной выдуманной метрики пользователей. Спрос — гипотеза с планом валидации на пилоте. Каждая цифра запроса сходится с финпланом и юнит-экономикой.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src"><b>TrackTribe</b> · Меджидов Заур · Амини Аким · ЭФБО-04-23 · Преподаватель: Адышкин С.С. · ИПТИП РТУ МИРЭА</div>
+    <div class="pageno">14 / 14</div>
+  </div>
+</section>
+
+</div></div>
+
+<div id="hud">
+  <button id="prev" title="Предыдущий слайд (←)">← Назад</button>
+  <span id="cnt" class="num" style="min-width:52px;text-align:center">01 / 14</span>
+  <select id="jump" aria-label="Быстрый переход к слайду"></select>
+  <div id="bar" title="Кликните для перехода"><i id="bar-fill"></i></div>
+  <button id="next" title="Следующий слайд (→)">Вперёд →</button>
+  <button id="print-btn" title="Печать в PDF (P)">⎙ PDF</button>
+  <span class="hint">←/→ · Space · P</span>
+</div>
+
+<script>
+(function(){
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+  var i = 0, n = slides.length;
+  var scaler = document.getElementById('scaler');
+  var cnt = document.getElementById('cnt');
+  var bar = document.getElementById('bar');
+  var barFill = document.getElementById('bar-fill');
+  var jump = document.getElementById('jump');
+
+  slides.forEach(function(s, idx){
+    var opt = document.createElement('option');
+    opt.value = idx;
+    opt.textContent = s.getAttribute('data-title') || ('Слайд ' + (idx + 1));
+    jump.appendChild(opt);
+  });
+
+  function fit(){
+    var availW = window.innerWidth - 24;
+    var availH = window.innerHeight - 62;
+    var s = Math.min(availW / 1280, availH / 720);
+    scaler.style.transform = 'scale(' + Math.max(0.2, s) + ')';
+  }
+
+  function pad(num){ return num < 10 ? '0' + num : '' + num; }
+
+  function show(k){
+    i = Math.max(0, Math.min(n - 1, k));
+    slides.forEach(function(s, j){
+      s.classList.toggle('on', j === i);
+    });
+    cnt.textContent = pad(i + 1) + ' / ' + pad(n);
+    barFill.style.width = ((i + 1) / n * 100) + '%';
+    jump.value = i;
+  }
+
+  document.getElementById('prev').onclick = function(){ show(i - 1); };
+  document.getElementById('next').onclick = function(){ show(i + 1); };
+  document.getElementById('print-btn').onclick = function(){ window.print(); };
+
+  jump.onchange = function(){ show(parseInt(this.value, 10)); };
+
+  bar.onclick = function(e){
+    var rect = bar.getBoundingClientRect();
+    var ratio = (e.clientX - rect.left) / rect.width;
+    show(Math.floor(ratio * n));
+  };
+
+  document.addEventListener('keydown', function(e){
+    if (e.target.tagName === 'SELECT') return;
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault();
+      show(i + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      show(i - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      show(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      show(n - 1);
+    } else if (e.key === 'p' || e.key === 'P') {
+      window.print();
+    }
+  });
+
+  var tx = null;
+  document.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, {passive: true});
+  document.addEventListener('touchend', function(e){
+    if (tx === null) return;
+    var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1));
+    tx = null;
+  }, {passive: true});
+
+  window.addEventListener('resize', fit);
+  fit();
+  show(0);
+})();
+</script>
+</body>
+</html>
