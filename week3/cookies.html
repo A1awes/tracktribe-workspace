@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light" data-ambient="on">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Политика использования cookie — TrackTribe</title>
+<meta name="description" content="Политика использования cookie TrackTribe. Авторы: Амини Аким, Меджидов Заур.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M24 44V16l22-4v26' fill='none' stroke='%23C4798B' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='18' cy='44' r='7' fill='%23C4798B'/%3E%3Ccircle cx='40' cy='38' r='7' fill='%23C4798B'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF8F8;--bg2:#F5EEEE;--sur:#fff;--sur2:#F6E9EC;--ink:#211D1E;--mut:#7A7274;--line:#EFE6E8;
+  --rose:#C4798B;--rose2:#E2A3B5;--peach:#D9A08C;--ok:#3FBF7F;
+  --rose-ink:#A85668;--ctl-bg:#FFFFFF;--ctl-border:#DFCFD4;--ctl-ink:#211D1E;--ctl-mut:#8A7E82;
+  --on-bg:#F6E9EC;--on-border:#C4798B;--on-ink:#A85668;--ctl-shadow:0 1px 3px rgba(80,45,58,.12);
+  --navbg:rgba(251,248,248,.86);--grad:linear-gradient(120deg,#C4798B,#D9A08C);
+  --shadow:0 16px 44px rgba(90,60,70,.13);--ease:cubic-bezier(.32,.72,0,1);--spring:cubic-bezier(.34,1.56,.64,1);
+}
+html[data-theme=dark]{
+  --bg:#1B1B1E;--bg2:#232025;--sur:#26262A;--sur2:#3A2E33;--ink:#F2EFF0;--mut:#9B9497;--line:#3A3A40;
+  --rose:#E2A3B5;--rose2:#C4798B;--peach:#E8B4A0;--ok:#4ADE80;
+  --rose-ink:#E2A3B5;--ctl-bg:#26262A;--ctl-border:#4C4C55;--ctl-ink:#F2EFF0;--ctl-mut:#9B9497;
+  --on-bg:#3A2E33;--on-border:#E2A3B5;--on-ink:#E9B9C7;--ctl-shadow:0 1px 3px rgba(0,0,0,.4);
+  --navbg:rgba(27,27,30,.86);--shadow:0 16px 44px rgba(0,0,0,.42);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;overflow-x:hidden;-webkit-tap-highlight-color:transparent;transition:background-color .45s var(--ease),color .45s var(--ease)}
+::selection{background:var(--rose);color:#fff}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--rose);border-radius:8px;border:2px solid var(--bg2)}
+::-webkit-scrollbar-thumb:hover{background:var(--peach)}
+*{scrollbar-width:thin;scrollbar-color:var(--rose) var(--bg2)}
+a{color:var(--rose-ink);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px;border-radius:8px}
+.mono{font-family:"JetBrains Mono",monospace}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+.glow{position:fixed;inset:-15%;z-index:0;pointer-events:none;filter:blur(90px);opacity:.42;contain:layout paint;transition:opacity .9s var(--ease)}
+html[data-theme=dark] .glow{opacity:.28}
+html[data-ambient=off] .glow{opacity:0}
+.glow i{position:absolute;border-radius:50%;opacity:.7;will-change:transform,opacity;transform:translateZ(0);backface-visibility:hidden}
+.glow .g1{width:46vw;height:46vw;left:-9vw;top:-12vw;background:radial-gradient(circle,var(--rose) 0%,transparent 66%);animation:breatheA 42s ease-in-out infinite}
+.glow .g2{width:40vw;height:40vw;right:-9vw;top:22vh;background:radial-gradient(circle,var(--peach) 0%,transparent 66%);animation:breatheB 56s ease-in-out infinite;animation-delay:-18s}
+.glow .g3{width:32vw;height:32vw;left:32vw;bottom:-16vw;background:radial-gradient(circle,var(--rose2) 0%,transparent 66%);animation:breatheC 68s ease-in-out infinite;animation-delay:-30s}
+@keyframes breatheA{0%,100%{opacity:.45;transform:translate3d(0,0,0) scale(1)}50%{opacity:.9;transform:translate3d(3vw,2vh,0) scale(1.06)}}
+@keyframes breatheB{0%,100%{opacity:.4;transform:translate3d(0,0,0) scale(1.04)}50%{opacity:.85;transform:translate3d(-3vw,-2vh,0) scale(1)}}
+@keyframes breatheC{0%,100%{opacity:.3;transform:translate3d(0,0,0) scale(1)}50%{opacity:.7;transform:translate3d(2vw,-3vh,0) scale(1.08)}}
+html[data-ambient=off] .glow i{animation-play-state:paused}
+.grain{position:fixed;inset:0;z-index:900;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--navbg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);transition:background-color .45s var(--ease),box-shadow .4s var(--ease)}
+nav.scrolled{box-shadow:0 10px 34px rgba(90,60,70,.12)}
+.progress{position:fixed;top:66px;left:0;height:2px;width:0;background:var(--grad);z-index:1001;transition:width .12s linear}
+.nav-in{max-width:1140px;margin:0 auto;padding:0 24px;height:66px;display:flex;align-items:center;gap:10px}
+.logo{display:flex;align-items:center;gap:9px;color:var(--ink);font-family:"Playfair Display",serif;font-weight:700;font-size:19px;white-space:nowrap}
+.logo:hover{text-decoration:none}
+.logo svg{color:var(--rose);flex:none}
+.nav-sp{flex:1}
+.back-link{font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:7px;color:var(--rose-ink);padding:8px 10px;border-radius:9px;transition:background-color .3s var(--ease)}
+.back-link:hover{background:var(--sur2);text-decoration:none}
+.itgl{position:relative;width:40px;height:40px;border-radius:11px;border:1.5px solid var(--ctl-border);background:var(--ctl-bg);color:var(--ctl-ink);display:grid;place-items:center;flex:none;box-shadow:var(--ctl-shadow);transition:transform .4s var(--spring),border-color .3s,color .3s,background-color .3s,box-shadow .3s}
+.itgl svg{width:19px;height:19px;display:block}
+.itgl:hover{border-color:var(--rose);color:var(--rose-ink);transform:translateY(-1px)}
+.itgl:active{transform:scale(.9)}
+.itgl::after{content:"";position:absolute;top:5px;right:5px;width:6px;height:6px;border-radius:50%;background:var(--rose);box-shadow:0 0 6px var(--rose);transition:background-color .3s,box-shadow .3s,opacity .3s}
+.itgl[aria-pressed=true]{background:var(--on-bg);border-color:var(--on-border);color:var(--on-ink);box-shadow:0 2px 10px rgba(196,121,139,.3)}
+.itgl[aria-pressed=false]{color:var(--ctl-mut)}
+.itgl[aria-pressed=false]::after{background:var(--ctl-mut);box-shadow:none;opacity:.5}
+.seg{display:flex;background:var(--ctl-bg);border:1.5px solid var(--ctl-border);border-radius:11px;padding:3px;gap:2px;flex:none;position:relative;box-shadow:var(--ctl-shadow)}
+.seg .thumb{position:absolute;top:3px;bottom:3px;left:0;width:0;border-radius:8px;background:var(--on-bg);box-shadow:inset 0 0 0 1.5px var(--on-border);transition:transform .5s var(--ease),width .5s var(--ease)}
+.seg button{position:relative;z-index:1;border:none;background:transparent;color:var(--ctl-mut);font-weight:800;font-size:12px;padding:6px 9px;border-radius:8px;display:grid;place-items:center;transition:color .35s var(--ease)}
+.seg button svg{width:15px;height:15px;display:block}
+.seg button.on{color:var(--on-ink)}
+.seg button:hover{color:var(--ctl-ink)}
+/* бургер и мобильное меню */
+.burger{display:none;width:40px;height:40px;border-radius:11px;border:1.5px solid var(--ctl-border);background:var(--ctl-bg);color:var(--ctl-ink);place-items:center;flex:none;box-shadow:var(--ctl-shadow);transition:transform .4s var(--spring),border-color .3s,color .3s}
+.burger:hover{border-color:var(--rose);color:var(--rose-ink)}
+.burger:active{transform:scale(.9)}
+.burger svg{width:20px;height:20px;display:block}
+.mobile-menu{position:fixed;top:66px;left:0;right:0;z-index:999;background:var(--navbg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:10px 16px 18px;display:flex;flex-direction:column;gap:2px;transform:translateY(-12px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s var(--ease),transform .45s var(--ease),visibility 0s linear .35s}
+.mobile-menu.open{transform:none;opacity:1;visibility:visible;pointer-events:auto;transition:opacity .35s var(--ease),transform .45s var(--ease)}
+.mobile-menu a{color:var(--ink);font-weight:700;font-size:15px;padding:12px 14px;border-radius:11px}
+.mobile-menu a:hover,.mobile-menu a:active{background:var(--sur2);color:var(--rose-ink);text-decoration:none}
+.mobile-menu a .n{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--rose-ink);margin-right:8px}
+.mobile-menu .btn{margin-top:10px}
+@media(min-width:861px){.mobile-menu{display:none}}
+@media(max-width:860px){.burger{display:grid}}
+@media(max-width:390px){#ambientBtn{display:none}}
+/* документ */
+.doc-hero{padding:130px 0 40px}
+.kick{font-family:"JetBrains Mono",monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--rose-ink)}
+h1{font-family:"Playfair Display",serif;font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.1;margin:14px 0 10px;max-width:820px}
+.upd{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--mut)}
+.doc-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.meta-chip{font-family:"JetBrains Mono",monospace;font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:99px;border:1px solid var(--ctl-border);background:var(--ctl-bg);color:var(--mut);box-shadow:var(--ctl-shadow)}
+.meta-chip.accent{color:var(--on-ink);background:var(--on-bg);border-color:var(--on-border)}
+.doc-layout{display:grid;grid-template-columns:250px 1fr;gap:44px;align-items:start;padding-bottom:80px}
+.toc{position:sticky;top:92px}
+.toc-card{background:var(--sur);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+.toc-title{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:12px}
+.toc a{display:block;color:var(--mut);font-size:13.5px;font-weight:600;padding:8px 10px;border-radius:9px;transition:color .25s,background-color .3s var(--ease);border-left:2px solid transparent}
+.toc a:hover{color:var(--ink);background:var(--sur2);text-decoration:none}
+.toc a.act{color:var(--rose-ink);background:var(--sur2);border-left-color:var(--rose)}
+.toc .num{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--rose-ink);margin-right:7px}
+.doc{max-width:760px}
+.doc section{scroll-margin-top:92px;margin-bottom:38px}
+.doc h2{font-family:"Playfair Display",serif;font-size:25px;font-weight:700;margin-bottom:14px;display:flex;gap:13px;align-items:baseline;line-height:1.2}
+.doc h2 .n{font-family:"JetBrains Mono",monospace;font-size:14px;color:var(--rose-ink);flex:none}
+.doc p{margin-bottom:12px;font-size:15.5px}
+.doc ul{margin:0 0 14px 22px}
+.doc li{margin-bottom:8px;font-size:15.5px}
+.doc-card{background:var(--sur);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:16px 0;box-shadow:var(--shadow)}
+.doc-card b{color:var(--rose-ink)}
+.pill{display:inline-block;font-size:11px;font-weight:800;padding:4px 12px;border-radius:99px;background:var(--on-bg);color:var(--on-ink);border:1px solid var(--on-border);margin-bottom:10px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--sur);margin:14px 0}
+.doc table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:600px}
+.doc th{font-family:"JetBrains Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);text-align:left;padding:12px 14px;border-bottom:1.5px solid var(--line);background:var(--sur2)}
+.doc td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.doc tr:last-child td{border-bottom:none}
+.doc code{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--rose-ink);background:var(--sur2);padding:2px 7px;border-radius:6px;border:1px solid var(--line)}
+.doc-nav{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;padding:13px 22px;border-radius:13px;font-weight:800;font-size:14px;transition:transform .45s var(--spring),border-color .3s,box-shadow .3s,background-color .3s,color .3s;text-decoration:none!important}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.96)}
+.btn.primary{background:var(--ink);color:var(--bg);box-shadow:0 8px 22px rgba(33,29,30,.2)}
+.btn.ghost{background:var(--ctl-bg);color:var(--ink);border:1.5px solid var(--ctl-border);box-shadow:var(--ctl-shadow)}
+.btn.ghost:hover{border-color:var(--rose)}
+.btn.rose{background:var(--grad);color:#fff;box-shadow:0 10px 26px rgba(196,121,139,.35)}
+.btn.small{padding:9px 15px;font-size:13px;border-radius:10px}
+footer{border-top:1px solid var(--line);padding:32px 0 42px;color:var(--mut);font-size:13px;position:relative;z-index:2}
+.footer-grid{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+.footer-links{display:flex;gap:16px;font-weight:700;font-size:13px}
+.footer-authors{font-family:"JetBrains Mono",monospace;font-size:12px}
+.rv{opacity:0;transform:translateY(24px);filter:blur(6px);transition:opacity .8s var(--ease),transform .8s var(--ease),filter .8s var(--ease)}
+.rv.on{opacity:1;transform:none;filter:blur(0)}
+/* оверлеи */
+.overlay{position:fixed;inset:0;z-index:3000;background:rgba(20,12,16,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .4s var(--ease),visibility 0s linear .4s}
+.overlay.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .4s var(--ease)}
+.sheet{background:var(--sur);color:var(--ink);border:1px solid var(--line);border-radius:22px;padding:28px;max-width:520px;width:100%;max-height:calc(100vh - 60px);overflow-y:auto;box-shadow:0 30px 80px rgba(20,10,16,.4);transform:scale(.92) translateY(18px);transition:transform .55s var(--spring);position:relative}
+.overlay.open .sheet{transform:none}
+.sheet h3{font-family:"Playfair Display",serif;font-size:22px;margin-bottom:8px}
+.sheet .sub{font-size:13px;color:var(--mut);margin-bottom:18px}
+.close-x{position:absolute;top:16px;right:18px;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--ctl-border);background:var(--ctl-bg);color:var(--ink);font-size:15px;box-shadow:var(--ctl-shadow)}
+.close-x:hover{border-color:var(--rose);color:var(--rose-ink)}
+.row{display:flex;gap:9px;flex-wrap:wrap}.row .btn{flex:1;min-width:120px}
+.opt{border:1px solid var(--line);border-radius:15px;padding:16px;margin-bottom:12px;background:var(--bg)}
+.opt-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.opt-head b{font-size:14.5px;flex:1}.opt p{font-size:12.5px;margin:0;color:var(--mut)}
+.switch{width:46px;height:27px;border-radius:99px;border:1.5px solid var(--ctl-border);background:var(--ctl-bg);position:relative;flex:none;transition:background-color .35s var(--ease),border-color .35s}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;background:var(--ctl-mut);box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .4s var(--spring),background-color .35s}
+.switch[aria-checked=true]{background:var(--on-bg);border-color:var(--on-border)}
+.switch[aria-checked=true]::after{transform:translateX(19px);background:var(--rose)}
+.switch.locked{opacity:.7;cursor:default}
+.badge-on{font-size:10.5px;font-weight:700;color:var(--on-ink);background:var(--on-bg);border:1px solid var(--on-border);padding:3px 9px;border-radius:99px}
+.status{display:flex;align-items:center;gap:8px;font-size:12px;font-family:"JetBrains Mono",monospace;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:10px 13px;margin:16px 0}
+.status .led{width:8px;height:8px;border-radius:50%;background:var(--mut)}
+.status.on .led{background:var(--ok);box-shadow:0 0 8px var(--ok)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 9px var(--ok)}
+.consent-banner{position:fixed;left:50%;bottom:22px;transform:translate(-50%,40px) scale(.96);width:min(600px,calc(100vw - 32px));background:var(--sur);color:var(--ink);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 20px 60px rgba(40,20,30,.22);opacity:0;visibility:hidden;pointer-events:none;z-index:2500;transition:transform .6s var(--spring),opacity .4s var(--ease),visibility 0s linear .4s}
+.consent-banner.show{transform:translate(-50%,0) scale(1);opacity:1;visibility:visible;pointer-events:auto;transition:transform .6s var(--spring),opacity .4s var(--ease)}
+.consent-banner h3{font-family:"Playfair Display",serif;font-size:19px;margin-bottom:8px;display:flex;align-items:center;gap:9px}
+.consent-banner p{font-size:13.5px;color:var(--mut);margin-bottom:14px}
+.consent-links{display:flex;gap:16px;margin-bottom:16px;font-size:12.5px}
+.consent-links a{font-weight:700;display:inline-flex;align-items:center;gap:5px}
+.consent-links a::after{content:"↗";font-size:11px}
+.policy-links{display:flex;gap:14px;margin-top:14px;font-size:12.5px}.policy-links a{font-weight:700}
+.cookie-float{position:fixed;left:18px;bottom:18px;z-index:2400;background:var(--ctl-bg);color:var(--ink);border:1.5px solid var(--ctl-border);border-radius:99px;padding:9px 15px;font-size:12.5px;font-weight:700;box-shadow:0 8px 24px rgba(40,20,30,.16);display:flex;align-items:center;gap:7px;opacity:0;transform:translateY(16px);pointer-events:none;transition:transform .4s var(--spring),opacity .3s,border-color .3s}
+.cookie-float.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.cookie-float:hover{border-color:var(--rose)}
+#toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,26px) scale(.9);z-index:4000;background:var(--sur);color:var(--ink);border:1.5px solid var(--rose);border-radius:14px;padding:12px 22px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;box-shadow:var(--shadow);transition:transform .55s var(--spring),opacity .35s var(--ease)}
+#toast.show{opacity:1;transform:translate(-50%,0) scale(1)}
+@media(max-width:900px){
+  .doc-layout{grid-template-columns:1fr;gap:24px}
+  .toc{position:static}
+  .toc-card{display:flex;flex-wrap:wrap;gap:4px;padding:14px}
+  .toc-title{width:100%;margin-bottom:6px}
+  .toc a{font-size:12.5px;padding:6px 9px}
+}
+@media(max-width:600px){
+  .nav-in{padding:0 12px;gap:6px}
+  .back-link span{display:none}
+  .doc-hero{padding-top:110px}
+  .footer-grid{flex-direction:column;text-align:center}
+  .itgl{width:36px;height:36px}
+  .seg button{padding:6px 7px}
+  .row{flex-direction:column}.row .btn{min-width:0}
+}
+@media(max-width:430px){.logo span{display:none}.logo{gap:0}}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .glow i{animation:none!important}
+  .rv{opacity:1!important;transform:none!important;filter:none!important}
+}
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"><i class="g1"></i><i class="g2"></i><i class="g3"></i></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<nav id="nav">
+  <div class="nav-in">
+    <a class="logo" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l10-2v13"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor" stroke="none"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor" stroke="none"/></svg>
+      <span>TrackTribe</span>
+    </a>
+    <span class="nav-sp"></span>
+    <a class="back-link" href="index.html">← <span data-ru="На главную" data-en="Home">На главную</span></a>
+    <button class="itgl" id="ambientBtn" aria-pressed="true" title="Фоновое свечение"></button>
+    <button class="itgl" id="soundBtn" aria-pressed="true" title="Звук"></button>
+    <div class="seg" id="langSeg"><span class="thumb"></span><button data-v="ru" class="on">RU</button><button data-v="en">EN</button></div>
+    <div class="seg" id="themeSeg"><span class="thumb"></span>
+      <button data-v="light" title="Светлая"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2 6 6M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg></button>
+      <button data-v="system" title="Системная"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/></svg></button>
+      <button data-v="dark" title="Тёмная"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 13.2A8.5 8.5 0 1 1 10.8 3.5a6.8 6.8 0 0 0 9.7 9.7z"/></svg></button>
+    </div>
+    <button class="burger" id="burgerBtn" aria-expanded="false" aria-controls="mobileMenu" aria-label="Меню"></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#s1"><span class="n">01</span><span data-ru="Что такое cookie" data-en="What cookies are">Что такое cookie</span></a>
+  <a href="#s2"><span class="n">02</span><span data-ru="Категории" data-en="Categories">Категории</span></a>
+  <a href="#s3"><span class="n">03</span><span data-ru="Перечень cookie" data-en="Cookie list">Перечень cookie</span></a>
+  <a href="#s4"><span class="n">04</span><span data-ru="Управление согласием" data-en="Managing consent">Управление согласием</span></a>
+  <a href="#s5"><span class="n">05</span><span data-ru="Правовое основание" data-en="Legal basis">Правовое основание</span></a>
+  <a href="privacy.html" data-ru="Политика ПДн →" data-en="Privacy policy →">Политика ПДн →</a>
+  <a class="btn rose small" href="index.html" data-ru="← На главную" data-en="← Home">← На главную</a>
+</div>
+
+<header class="wrap doc-hero">
+  <div class="kick">152-ФЗ · <span data-ru="Документ" data-en="Document">Документ</span></div>
+  <h1 data-ru="Политика использования cookie" data-en="Cookie policy">Политика использования cookie</h1>
+  <div class="upd" data-ru="Редакция от 15.09.2026 · действует для сайта TrackTribe" data-en="Version of 15.09.2026 · applies to the TrackTribe site">Редакция от 15.09.2026 · действует для сайта TrackTribe</div>
+  <div class="doc-meta">
+    <span class="meta-chip accent">152-ФЗ</span>
+    <span class="meta-chip">TrackTribe</span>
+    <span class="meta-chip" data-ru="Амини Аким · Меджидов Заур" data-en="Amini Akim · Medzhidov Zaur">Амини Аким · Меджидов Заур</span>
+  </div>
+</header>
+
+<div class="wrap doc-layout">
+  <aside class="toc">
+    <div class="toc-card">
+      <div class="toc-title" data-ru="Содержание" data-en="Contents">Содержание</div>
+      <a href="#s1"><span class="num">01</span><span data-ru="Что такое cookie" data-en="What cookies are">Что такое cookie</span></a>
+      <a href="#s2"><span class="num">02</span><span data-ru="Категории" data-en="Categories">Категории</span></a>
+      <a href="#s3"><span class="num">03</span><span data-ru="Перечень cookie" data-en="Cookie list">Перечень cookie</span></a>
+      <a href="#s4"><span class="num">04</span><span data-ru="Управление согласием" data-en="Managing consent">Управление согласием</span></a>
+      <a href="#s5"><span class="num">05</span><span data-ru="Правовое основание" data-en="Legal basis">Правовое основание</span></a>
+    </div>
+  </aside>
+
+  <main class="doc">
+    <section id="s1" class="rv">
+      <h2><span class="n">01</span><span data-ru="Что такое cookie" data-en="What cookies are">Что такое cookie</span></h2>
+      <p data-ru="Cookie — небольшие текстовые файлы, которые сайт сохраняет в браузере пользователя. Они помогают сайту работать, запоминать выбор и собирать анонимную статистику. TrackTribe использует две категории: необходимые и аналитические." data-en="Cookies are small text files a site stores in the user's browser. They keep the site working, remember choices and collect anonymous statistics. TrackTribe uses two categories: necessary and analytics.">Cookie — небольшие текстовые файлы, которые сайт сохраняет в браузере пользователя. Они помогают сайту работать, запоминать выбор и собирать анонимную статистику. TrackTribe использует две категории: необходимые и аналитические.</p>
+    </section>
+
+    <section id="s2" class="rv">
+      <h2><span class="n">02</span><span data-ru="Категории cookie" data-en="Cookie categories">Категории cookie</span></h2>
+      <div class="doc-card">
+        <span class="pill" data-ru="Необходимые" data-en="Necessary">Необходимые</span>
+        <p style="margin-bottom:0" data-ru="Обеспечивают работу сайта и хранят ваш выбор согласия, языка, темы и фонового свечения. Не требуют согласия и не могут быть отключены через баннер." data-en="Keep the site running and store your consent, language, theme and background glow choices. They do not require consent and cannot be disabled via the banner.">Обеспечивают работу сайта и хранят ваш выбор согласия, языка, темы и фонового свечения. Не требуют согласия и не могут быть отключены через баннер.</p>
+      </div>
+      <div class="doc-card">
+        <span class="pill" data-ru="Аналитические" data-en="Analytics">Аналитические</span>
+        <p style="margin-bottom:0" data-ru="Яндекс.Метрика: анонимная статистика посещений. Устанавливаются только после согласия («Принять» или переключатель «Аналитика»). Можно отклонить без потери функциональности." data-en="Yandex.Metrica: anonymous visit statistics. Set only after consent (“Accept” or the “Analytics” switch). Can be rejected without losing functionality.">Яндекс.Метрика: анонимная статистика посещений. Устанавливаются только после согласия («Принять» или переключатель «Аналитика»). Можно отклонить без потери функциональности.</p>
+      </div>
+    </section>
+
+    <section id="s3" class="rv">
+      <h2><span class="n">03</span><span data-ru="Перечень cookie" data-en="Cookie list">Перечень cookie</span></h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th data-ru="Файл" data-en="Name">Файл</th>
+            <th data-ru="Категория" data-en="Category">Категория</th>
+            <th data-ru="Назначение" data-en="Purpose">Назначение</th>
+            <th data-ru="Срок" data-en="Duration">Срок</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><code>tt-consent-v1</code></td><td data-ru="Необходимые" data-en="Necessary">Необходимые</td><td data-ru="Хранит выбор согласия на аналитику" data-en="Stores the analytics consent choice">Хранит выбор согласия на аналитику</td><td data-ru="До изменения" data-en="Until changed">До изменения</td></tr>
+            <tr><td><code>tt-theme</code> / <code>tt-lang</code> / <code>tt-ambient</code></td><td data-ru="Необходимые" data-en="Necessary">Необходимые</td><td data-ru="Выбранные тема, язык и фоновое свечение" data-en="Chosen theme, language and background glow">Выбранные тема, язык и фоновое свечение</td><td data-ru="До изменения" data-en="Until changed">До изменения</td></tr>
+            <tr><td><code>_ym_uid</code></td><td data-ru="Аналитические" data-en="Analytics">Аналитические</td><td data-ru="Уникальный идентификатор посетителя Метрики" data-en="Unique Metrica visitor ID">Уникальный идентификатор посетителя Метрики</td><td data-ru="1 год" data-en="1 year">1 год</td></tr>
+            <tr><td><code>_ym_d</code></td><td data-ru="Аналитические" data-en="Analytics">Аналитические</td><td data-ru="Дата первого визита" data-en="First visit date">Дата первого визита</td><td data-ru="1 год" data-en="1 year">1 год</td></tr>
+            <tr><td><code>_ym_isad</code></td><td data-ru="Аналитические" data-en="Analytics">Аналитические</td><td data-ru="Определение блокировщика рекламы" data-en="Ad-blocker detection">Определение блокировщика рекламы</td><td data-ru="2 дня" data-en="2 days">2 дня</td></tr>
+            <tr><td><code>yandexuid</code> / <code>ymex</code></td><td data-ru="Аналитические" data-en="Analytics">Аналитические</td><td data-ru="Идентификаторы сервиса Яндекс" data-en="Yandex service identifiers">Идентификаторы сервиса Яндекс</td><td data-ru="1 год / сессия" data-en="1 year / session">1 год / сессия</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p data-ru="Вебвизор (запись сессий) в Метрике отключён — дополнительно снижаем объём собираемых данных." data-en="Session recording (Webvisor) is disabled in Metrica to further reduce the data collected.">Вебвизор (запись сессий) в Метрике отключён — дополнительно снижаем объём собираемых данных.</p>
+    </section>
+
+    <section id="s4" class="rv">
+      <h2><span class="n">04</span><span data-ru="Как управлять согласием" data-en="Managing consent">Как управлять согласием</span></h2>
+      <ul>
+        <li data-ru="При первом визите выберите «Принять», «Отклонить» или «Настроить» в баннере." data-en="On your first visit choose “Accept”, “Reject” or “Settings” in the banner.">При первом визите выберите «Принять», «Отклонить» или «Настроить» в баннере.</li>
+        <li data-ru="В любой момент нажмите «🍪 Настройки cookie» на главной странице и измените выбор." data-en="At any time press “🍪 Cookie settings” on the main page and change your choice.">В любой момент нажмите «🍪 Настройки cookie» на главной странице и измените выбор.</li>
+        <li data-ru="Отзыв аналитики применяется со следующей загрузки страницы — счётчик не будет инициализирован." data-en="Revoking analytics takes effect on the next page load — the counter will not be initialised.">Отзыв аналитики применяется со следующей загрузки страницы — счётчик не будет инициализирован.</li>
+        <li data-ru="Фоновое свечение отключается кнопкой со звёздочкой в шапке — это настройка оформления (tt-ambient), не аналитика." data-en="Background glow is toggled with the star button in the header — a display setting (tt-ambient), not analytics.">Фоновое свечение отключается кнопкой со звёздочкой в шапке — это настройка оформления (tt-ambient), не аналитика.</li>
+        <li data-ru="Дополнительно cookie можно удалить в настройках браузера." data-en="You can also delete cookies in your browser settings.">Дополнительно cookie можно удалить в настройках браузера.</li>
+      </ul>
+    </section>
+
+    <section id="s5" class="rv">
+      <h2><span class="n">05</span><span data-ru="Правовое основание" data-en="Legal basis">Правовое основание</span></h2>
+      <p><span data-ru="Аналитические cookie используются на основании согласия пользователя (п. 1 ч. 1 ст. 6 Закона № 152-ФЗ). Обработка данных Яндекс.Метрикой регулируется" data-en="Analytics cookies are used with the user's consent (Art. 6(1)(1) of Law 152-FZ). Data processing by Yandex.Metrica is governed by the">Аналитические cookie используются на основании согласия пользователя (п. 1 ч. 1 ст. 6 Закона № 152-ФЗ). Обработка данных Яндекс.Метрикой регулируется</span> <a href="https://yandex.ru/legal/metrica_termsofuse/" target="_blank" rel="noopener" data-ru="условиями сервиса" data-en="service terms">условиями сервиса</a>. <span data-ru="Подробнее об обработке данных — в" data-en="More about data processing in the">Подробнее об обработке данных — в</span> <a href="privacy.html" data-ru="Политике обработки персональных данных" data-en="Personal data processing policy">Политике обработки персональных данных</a>.</p>
+      <div class="doc-card">
+        <p style="margin-bottom:0"><b data-ru="Авторы проекта:" data-en="Project authors:">Авторы проекта:</b> <span data-ru="Амини Аким и Меджидов Заур." data-en="Amini Akim and Medzhidov Zaur.">Амини Аким и Меджидов Заур.</span></p>
+      </div>
+      <div class="doc-nav">
+        <a class="btn primary" href="index.html" data-ru="← Вернуться на лендинг" data-en="← Back to the landing">← Вернуться на лендинг</a>
+        <a class="btn ghost" href="privacy.html" data-ru="Политика ПДн →" data-en="Privacy policy →">Политика ПДн →</a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap footer-grid">
+    <a class="logo" href="index.html" style="font-size:17px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l10-2v13"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor" stroke="none"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor" stroke="none"/></svg>
+      <span>TrackTribe</span>
+    </a>
+    <span class="footer-authors" data-ru="© 2026 · Стартап в ИТ · ЭФБО-04-23" data-en="© 2026 · Startup in IT · EFBO-04-23">© 2026 · Стартап в ИТ · ЭФБО-04-23</span>
+    <div class="footer-links">
+      <a href="index.html" data-ru="Главная" data-en="Home">Главная</a>
+      <a href="privacy.html" data-ru="Политика ПДн" data-en="Privacy policy">Политика ПДн</a>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="consentOverlay"><div class="sheet">
+  <button class="close-x" data-close="consentOverlay" aria-label="Закрыть">✕</button>
+  <h3 data-ru="Настройки cookie" data-en="Cookie settings">Настройки cookie</h3>
+  <div class="sub" data-ru="Включайте только то, с чем согласны. Необходимые файлы всегда активны." data-en="Enable only what you agree to. Necessary cookies are always on.">Включайте только то, с чем согласны. Необходимые файлы всегда активны.</div>
+  <div class="opt"><div class="opt-head"><b data-ru="Необходимые" data-en="Necessary">Необходимые</b><span class="badge-on" data-ru="всегда включены" data-en="always on">всегда включены</span><button class="switch locked" aria-checked="true" aria-disabled="true" tabindex="-1"></button></div><p data-ru="Хранят выбор согласия, языка и темы. Без них сайт не работает." data-en="Store consent, language and theme choices. The site needs them.">Хранят выбор согласия, языка и темы. Без них сайт не работает.</p></div>
+  <div class="opt"><div class="opt-head"><b data-ru="Аналитика · Яндекс.Метрика" data-en="Analytics · Yandex.Metrica">Аналитика · Яндекс.Метрика</b><button class="switch" id="analyticsSwitch" role="switch" aria-checked="false"></button></div><p data-ru="Анонимная статистика посещений: источники, устройства, поведение. Помогает улучшать продукт." data-en="Anonymous visit statistics: sources, devices, behavior. Helps improve the product.">Анонимная статистика посещений: источники, устройства, поведение. Помогает улучшать продукт.</p></div>
+  <div class="status" id="metricaStatus"><span class="led"></span><span id="metricaStatusTxt">Счётчик не настроен</span></div>
+  <div class="row"><button class="btn ghost" id="consentReject" data-ru="Отклонить" data-en="Reject">Отклонить</button><button class="btn ghost" id="consentSave" data-ru="Сохранить" data-en="Save">Сохранить</button><button class="btn rose" id="consentAccept" data-ru="Принять все" data-en="Accept all">Принять все</button></div>
+  <div class="policy-links"><a href="privacy.html" data-ru="Политика ПДн ↗" data-en="Privacy policy ↗">Политика ПДн ↗</a><a href="cookies.html" data-ru="Политика cookie ↗" data-en="Cookie policy ↗">Политика cookie ↗</a></div>
+</div></div>
+
+<div class="consent-banner" id="consentBanner" role="dialog" aria-labelledby="consentTitle">
+  <h3 id="consentTitle"><span class="dot"></span><span data-ru="Мы используем cookie" data-en="We use cookies">Мы используем cookie</span></h3>
+  <p data-ru="Необходимые — для работы сайта. Аналитика (Яндекс.Метрика) — только с вашего согласия. Выбор можно изменить в любой момент." data-en="Necessary cookies keep the site working. Analytics (Yandex.Metrica) runs only with your consent. Change anytime.">Необходимые — для работы сайта. Аналитика (Яндекс.Метрика) — только с вашего согласия. Выбор можно изменить в любой момент.</p>
+  <div class="consent-links"><a href="privacy.html" data-ru="Политика ПДн" data-en="Privacy policy">Политика ПДн</a><a href="cookies.html" data-ru="Политика cookie" data-en="Cookie policy">Политика cookie</a></div>
+  <div class="row"><button class="btn ghost" id="bannerSettings" data-ru="Настроить" data-en="Settings">Настроить</button><button class="btn ghost" id="bannerReject" data-ru="Отклонить" data-en="Reject">Отклонить</button><button class="btn rose" id="bannerAccept" data-ru="Принять" data-en="Accept">Принять</button></div>
+</div>
+<button class="cookie-float" id="cookieFloat">🍪 <span data-ru="Настройки cookie" data-en="Cookie settings">Настройки cookie</span></button>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+var D=document,W=window,$=function(s){return D.querySelector(s);},$$=function(s){return Array.prototype.slice.call(D.querySelectorAll(s));};
+var lang='ru',themePref='system',ambientOn=true,soundOn=true,toastT=null;
+var METRICA_ID=0;
+var TITLES={ru:'Политика использования cookie — TrackTribe',en:'Cookie policy — TrackTribe'};
+var AMB_ON='<svg viewBox="0 0 24 24"><path d="M12 2.5 14.1 9.9 21.5 12 14.1 14.1 12 21.5 9.9 14.1 2.5 12 9.9 9.9Z" fill="currentColor"/></svg>';
+var AMB_OFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 13.7 10.3 20 12 13.7 13.7 12 20 10.3 13.7 4 12 10.3 10.3Z"/><path d="M4.5 4.5 19.5 19.5"/></svg>';
+var VOL_ON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor" stroke="none"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.2 6.2a8.5 8.5 0 0 1 0 11.6"/></svg>';
+var VOL_OFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor" stroke="none"/><path d="m16.5 9.5 5 5M21.5 9.5l-5 5"/></svg>';
+var BURGER='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+var CLOSE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>';
+var T={
+  ru:{saved:'Выбор сохранён ✓',noCounter:'Счётчик не настроен',metricaOn:'Метрика активна',metricaOff:'Метрика не загружена',muted:'Звук выключен',unmuted:'Звук включён',soundOnTip:'Звук включён · нажмите, чтобы выключить',soundOffTip:'Звук выключен · нажмите, чтобы включить',ambOnTip:'Свечение включено · нажмите, чтобы выключить',ambOffTip:'Свечение выключено · нажмите, чтобы включить',menuOpen:'Закрыть меню',menuClosed:'Меню'},
+  en:{saved:'Choice saved ✓',noCounter:'Counter not configured',metricaOn:'Metrica active',metricaOff:'Metrica not loaded',muted:'Sound off',unmuted:'Sound on',soundOnTip:'Sound on · click to mute',soundOffTip:'Sound off · click to unmute',ambOnTip:'Glow on · click to disable',ambOffTip:'Glow off · click to enable',menuOpen:'Close menu',menuClosed:'Menu'}
+};
+function t(k){return T[lang][k]||k;}
+function toast(m){var el=$('#toast');el.textContent=m;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove('show');},2200);}
+function moveThumb(seg){var on=seg.querySelector('button.on'),th=seg.querySelector('.thumb');if(!on||!th)return;th.style.width=on.offsetWidth+'px';th.style.transform='translateX('+(on.offsetLeft-3)+'px)';}
+function moveAll(){$$('.seg').forEach(moveThumb);}
+function openOverlay(id){var o=$('#'+id);o.classList.add('open');var f=o.querySelector('button,input');if(f)setTimeout(function(){f.focus();},120);}
+function closeOverlay(id){$('#'+id).classList.remove('open');}
+
+/* свечение */
+try{ambientOn=localStorage.getItem('tt-ambient')!=='off';}catch(e){}
+function applyAmbient(){D.documentElement.setAttribute('data-ambient',ambientOn?'on':'off');var b=$('#ambientBtn');b.innerHTML=ambientOn?AMB_ON:AMB_OFF;b.setAttribute('aria-pressed',String(ambientOn));var tip=ambientOn?t('ambOnTip'):t('ambOffTip');b.title=tip;b.setAttribute('aria-label',tip);}
+$('#ambientBtn').addEventListener('click',function(){ambientOn=!ambientOn;try{localStorage.setItem('tt-ambient',ambientOn?'on':'off');}catch(e){}applyAmbient();});
+
+/* звук (site-wide preference) */
+try{soundOn=localStorage.getItem('tt-muted')!=='true';}catch(e){}
+function updateSound(){var b=$('#soundBtn');b.innerHTML=soundOn?VOL_ON:VOL_OFF;b.setAttribute('aria-pressed',String(soundOn));var tip=soundOn?t('soundOnTip'):t('soundOffTip');b.title=tip;b.setAttribute('aria-label',tip);}
+$('#soundBtn').addEventListener('click',function(){soundOn=!soundOn;try{localStorage.setItem('tt-muted',soundOn?'false':'true');}catch(e){}updateSound();toast(soundOn?t('unmuted'):t('muted'));});
+
+/* тема */
+var mq=matchMedia('(prefers-color-scheme: dark)');
+function resolveTheme(){var dark=themePref==='dark'||(themePref==='system'&&mq.matches);D.documentElement.dataset.theme=dark?'dark':'light';$$('#themeSeg button').forEach(function(b){b.classList.toggle('on',b.dataset.v===themePref);});moveThumb($('#themeSeg'));}
+try{themePref=localStorage.getItem('tt-theme')||'system';}catch(e){}
+resolveTheme();
+if(mq.addEventListener)mq.addEventListener('change',function(){if(themePref==='system')resolveTheme();});
+$('#themeSeg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;themePref=b.dataset.v;try{localStorage.setItem('tt-theme',themePref);}catch(err){}resolveTheme();});
+
+/* язык */
+function applyLang(){
+  D.documentElement.lang=lang;
+  D.title=TITLES[lang];
+  $$('[data-ru]').forEach(function(el){var v=el.getAttribute('data-'+lang);if(v!==null)el.textContent=v;});
+  $$('#langSeg button').forEach(function(b){b.classList.toggle('on',b.dataset.v===lang);});
+  moveThumb($('#langSeg'));
+  applyAmbient();
+  updateSound();
+  updateMetricaStatus();
+  setMenu(mobileMenu.classList.contains('open'));
+}
+try{lang=localStorage.getItem('tt-lang')||'ru';}catch(e){}
+$('#langSeg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;lang=b.dataset.v;try{localStorage.setItem('tt-lang',lang);}catch(err){}applyLang();});
+
+/* бургер */
+var burgerBtn=$('#burgerBtn'),mobileMenu=$('#mobileMenu');
+function setMenu(open){
+  mobileMenu.classList.toggle('open',open);
+  burgerBtn.setAttribute('aria-expanded',String(open));
+  burgerBtn.innerHTML=open?CLOSE:BURGER;
+  var tip=open?t('menuOpen'):t('menuClosed');
+  burgerBtn.title=tip;burgerBtn.setAttribute('aria-label',tip);
+}
+burgerBtn.addEventListener('click',function(e){e.stopPropagation();setMenu(!mobileMenu.classList.contains('open'));});
+mobileMenu.addEventListener('click',function(e){if(e.target.closest('a'))setMenu(false);});
+D.addEventListener('click',function(e){if(mobileMenu.classList.contains('open')&&!mobileMenu.contains(e.target)&&!burgerBtn.contains(e.target))setMenu(false);});
+setMenu(false);
+
+/* оверлеи */
+$$('[data-close]').forEach(function(b){b.addEventListener('click',function(){closeOverlay(b.getAttribute('data-close'));});});
+$$('.overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)closeOverlay(o.id);});});
+D.addEventListener('keydown',function(e){if(e.key==='Escape'){$$('.overlay.open').forEach(function(o){closeOverlay(o.id);});setMenu(false);}});
+
+/* reveal */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.1});
+$$('.rv').forEach(function(el,i){el.style.transitionDelay=(i%3*70)+'ms';io.observe(el);});
+
+/* TOC active */
+var links=$$('.toc a');
+var secIO=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)links.forEach(function(a){a.classList.toggle('act',a.getAttribute('href')==='#'+e.target.id);});});},{rootMargin:'-30% 0px -60% 0px'});
+$$('.doc section').forEach(function(s){secIO.observe(s);});
+
+/* progress + nav scrolled */
+var parT=false;
+W.addEventListener('scroll',function(){
+  if(parT)return;parT=true;
+  requestAnimationFrame(function(){
+    var y=W.scrollY;
+    $('#nav').classList.toggle('scrolled',y>10);
+    var h=D.documentElement.scrollHeight-W.innerHeight;
+    $('#progress').style.width=(h>0?(y/h*100):0)+'%';
+    parT=false;
+  });
+},{passive:true});
+
+/* cookie consent */
+var consent=null,metricaLoaded=false;
+function readConsent(){try{var c=JSON.parse(localStorage.getItem('tt-consent-v1'));if(c&&c.ver===1)return c;}catch(e){}return null;}
+function storeConsent(c){c.ver=1;c.ts=Date.now();try{localStorage.setItem('tt-consent-v1',JSON.stringify(c));}catch(e){}consent=c;}
+function loadMetrica(){if(!METRICA_ID||metricaLoaded)return;metricaLoaded=true;(function(m,e,t2,r,i2,k,a){m[i2]=m[i2]||function(){(m[i2].a=m[i2].a||[]).push(arguments);};m[i2].l=1*new Date();for(var j=0;j<e.scripts.length;j++){if(e.scripts[j].src===r)return;}k=e.createElement(t2);a=e.getElementsByTagName(t2)[0];k.async=1;k.src=r;a.parentNode.insertBefore(k,a);})(W,D,'script','https://mc.yandex.ru/metrika/tag.js','ym');W.ym(METRICA_ID,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:false,ecommerce:false});updateMetricaStatus();}
+function track(goal,params){if(!consent||!consent.analytics||!METRICA_ID)return;if(typeof W.ym==='function')W.ym(METRICA_ID,'reachGoal',goal,params||{});}
+function updateMetricaStatus(){var s=$('#metricaStatus'),txt=$('#metricaStatusTxt');if(!METRICA_ID){s.classList.remove('on');txt.textContent=t('noCounter');}else if(metricaLoaded){s.classList.add('on');txt.textContent=t('metricaOn')+' · #'+METRICA_ID;}else{s.classList.remove('on');txt.textContent=t('metricaOff');}}
+function applyConsent(){if(consent&&consent.analytics)loadMetrica();updateMetricaStatus();}
+function decide(analytics){storeConsent({necessary:true,analytics:analytics});$('#consentBanner').classList.remove('show');closeOverlay('consentOverlay');$('#cookieFloat').classList.add('show');applyConsent();toast(t('saved'));}
+$('#bannerAccept').addEventListener('click',function(){decide(true);});
+$('#bannerReject').addEventListener('click',function(){decide(false);});
+$('#bannerSettings').addEventListener('click',function(){$('#analyticsSwitch').setAttribute('aria-checked',consent&&consent.analytics?'true':'false');openOverlay('consentOverlay');});
+$('#consentAccept').addEventListener('click',function(){decide(true);});
+$('#consentReject').addEventListener('click',function(){decide(false);});
+$('#consentSave').addEventListener('click',function(){decide($('#analyticsSwitch').getAttribute('aria-checked')==='true');});
+$('#analyticsSwitch').addEventListener('click',function(){var on=$('#analyticsSwitch').getAttribute('aria-checked')==='true';$('#analyticsSwitch').setAttribute('aria-checked',on?'false':'true');});
+$('#cookieFloat').addEventListener('click',function(){$('#analyticsSwitch').setAttribute('aria-checked',consent&&consent.analytics?'true':'false');openOverlay('consentOverlay');});
+
+/* init */
+consent=readConsent();
+if(!consent)setTimeout(function(){$('#consentBanner').classList.add('show');},700);
+else{applyConsent();$('#cookieFloat').classList.add('show');}
+applyLang();moveAll();applyAmbient();updateSound();updateMetricaStatus();
+if(consent&&consent.analytics)track('view_cookies');
+if(D.fonts&&D.fonts.ready)D.fonts.ready.then(moveAll);
+W.addEventListener('resize',moveAll);
+W.addEventListener('load',moveAll);
+})();
+</script>
+</body>
+</html>
