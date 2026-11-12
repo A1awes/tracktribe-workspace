@@ -15,8 +15,8 @@
 
 | Участник | Роль в проекте | GitHub |
 | :--- | :--- | :--- |
-| **Меджидов Заур** | Тимлид / Разработка и архитектура | [Профиль](https://github.com/pokemaster19) |
-| **Амини Аким** | Аналитик / Исследование и документация | [Профиль](https://github.com/A1awes) |
+| **Меджидов Заур** | Тимлид / Разработка и архитектура | [Профиль](ЗАМЕНИ_НА_ССЫЛКУ) |
+| **Амини Аким** | Аналитик / Исследование и документация | [Профиль](ЗАМЕНИ_НА_ССЫЛКУ) |
 
 <br/>
 
@@ -28,9 +28,9 @@
 <br/>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Status-In_Progress-blue?style=flat-square" />
-  <img src="https://img.shields.io/badge/Team-2_members-purple?style=flat-square" />
-  <img src="https://img.shields.io/badge/Course-Startup_in_IT-orange?style=flat-square" />
+  <img src="https://img.shields.io/badge/Статус-В_работе-blue?style=flat-square" />
+  <img src="https://img.shields.io/badge/Команда-2_участника-purple?style=flat-square" />
+  <img src="https://img.shields.io/badge/Курс-Стартап_в_ИТ-orange?style=flat-square" />
 </div>
 
 <br/>
