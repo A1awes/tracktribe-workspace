@@ -1,1 +1,41 @@
-# tracktribe-workspace
+<div align="center">
+  <h1>📂 TrackTribe Workspace</h1>
+  <p><i>Рабочее пространство: от первых шагов до запуска проекта.</i></p>
+</div>
+
+<br/>
+
+### 🗺️ Навигация по репозиторию
+
+Здесь собраны материалы по курсу, исследования, юридические документы и код проекта.
+
+<br/>
+
+### 👥 Команда
+
+| Участник | Роль в проекте | GitHub |
+| :--- | :--- | :--- |
+| **Меджидов Заур** | Тимлид / Разработка и архитектура | [Профиль](https://github.com/pokemaster19) |
+| **Амини Аким** | Аналитик / Исследование и документация | [Профиль](https://github.com/A1awes) |
+
+<br/>
+
+### 🛠 О проекте
+
+**TrackTribe** — веб-сервис для совместного прослушивания музыки. 
+Этот репозиторий служит единой базой знаний для команды и хранилищем артефактов разработки.
+
+<br/>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Status-In_Progress-blue?style=flat-square" />
+  <img src="https://img.shields.io/badge/Team-2_members-purple?style=flat-square" />
+  <img src="https://img.shields.io/badge/Course-Startup_in_IT-orange?style=flat-square" />
+</div>
+
+<br/>
+
+---
+<div align="center">
+  <sub>Учебный проект. Группа ЭФБО-04-23. Все данные вымышлены.</sub>
+</div>
